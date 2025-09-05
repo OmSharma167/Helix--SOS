@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+
 import User from '../User/User.js';
 
 import mongoose from "mongoose";
-import Roles from "./enum/roles.js";
+import Roles from "../../enum/roles.js";
 
 const doctorSchema = new mongoose.Schema(
   {

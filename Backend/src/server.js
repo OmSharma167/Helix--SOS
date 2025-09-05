@@ -4,6 +4,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 
 import userRoutes from "./routes/userRoutes.js";
+import doctorRoutes from "./routes/doctorRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -12,6 +14,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/users", userRoutes);
+app.use("/api/doctors", doctorRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 // Database connection
 connectDB();

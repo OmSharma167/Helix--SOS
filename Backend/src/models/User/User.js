@@ -1,6 +1,7 @@
 
 import mongoose from "mongoose";
-import Roles from "./enum/roles.js";
+import Roles from "../../enum/roles.js";
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -22,10 +23,6 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     address: {
-      type: String,
-      required: true,
-    },
-    answer: {
       type: String,
       required: true,
     },
