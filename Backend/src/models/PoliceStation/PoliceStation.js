@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Roles from "./enum/roles.js";
+import Roles from "../../enum/roles.js";
 
 const policeStationSchema = new mongoose.Schema(
   {

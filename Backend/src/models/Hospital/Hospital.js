@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Roles from "./enum/roles.js";
+import Roles from "../../enum/roles.js";
 
 const hospitalSchema = new mongoose.Schema(
   {
@@ -55,13 +55,13 @@ const hospitalSchema = new mongoose.Schema(
     //   },
     // ],
 
-    // // Ambulances linked to hospital
-    // ambulances: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Ambulance",
-    //   },
-    // ],
+    // Ambulances linked to hospital
+    ambulances: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Ambulance",
+      },
+    ],
 
     // Role (to identify hospital in system)
     role: {

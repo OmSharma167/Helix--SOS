@@ -6,6 +6,10 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
+import ambulanceRoutes from "./routes/ambulanceRoutes.js";
+import emergencyRoutes from "./routes/emergencyRoutes.js";
+import policeStationRoutes from "./routes/policeStationRoutes.js";
+import hospitalRoutes from "./routes/hospitalRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -16,6 +20,11 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/ambulances", ambulanceRoutes);
+app.use("/api/emergencies", emergencyRoutes);
+app.use("/api/police-stations", policeStationRoutes);
+app.use("/api/hospitals", hospitalRoutes);
+
 
 // Database connection
 connectDB();
