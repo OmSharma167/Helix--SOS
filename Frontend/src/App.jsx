@@ -15,20 +15,23 @@
 
 import React from "react";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import HospitalRegistrationForm from "./pages/HospitalRegistrationForm";
+import PoliceStationRegistrationForm from "./pages/PoliceStationRegistrationForm";
 
 function App() {
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/hospital-registration" element={<HospitalRegistrationForm />} />
+        <Route path="/police-registration" element={<PoliceStationRegistrationForm />} />
+
       </Routes>
-    </Router>
   );
 }
 
