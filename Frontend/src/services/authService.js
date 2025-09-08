@@ -16,8 +16,16 @@ export const loginUser = async (userData) => {
   return data;
 };
 
-export const me = async (userData)=>{
-    const {data} = await API.get("/me",userData);
-    return data;
-}
+// export const me = async (userData)=>{
+//     const {data} = await API.get("/me",userData);
+//     return data;
+// }
+
+export const me = async () => {
+  const token = localStorage.getItem("token");
+  const { data } = await API.get("/me", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return data;
+};
 

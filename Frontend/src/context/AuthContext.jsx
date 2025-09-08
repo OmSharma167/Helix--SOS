@@ -1,15 +1,33 @@
-import React, { createContext, useContext, useState } from "react";
-import { loginUser, signupUser } from "../services/authService";
+
+
+import React, { createContext, useContext, useState, useEffect } from "react";
+
+import { loginUser, signupUser,me } from "../services/authService";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const res = await me();
+          setUser(res);
+        } catch (err) {
+          console.error("Auto-login failed:", err);
+          localStorage.removeItem("token");
+        }
+      }
+    };
+    fetchUser();
+  }, []);
 
   const login = async (credentials) => {
     try {
       const res = await loginUser(credentials);
-      setUser(res.user);
+      setUser(res); // ✅ store entire user object
       localStorage.setItem("token", res.token);
       window.location.href = "/";
     } catch (error) {
@@ -20,8 +38,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (userData) => {
     try {
       const res = await signupUser(userData);
-      setUser(res.user);
-      console.log(res.user)
+      setUser(res); // ✅ store entire user object
       localStorage.setItem("token", res.token);
       window.location.href = "/";
     } catch (error) {
