@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
-
 import userRoutes from "./routes/userRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
@@ -12,10 +11,8 @@ import policeStationRoutes from "./routes/policeStationRoutes.js";
 import hospitalRoutes from "./routes/hospitalRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import hospitalReviewRoutes from "./routes/hospitalReviewRoutes.js";
-
 dotenv.config();
 const app = express();
-
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -28,8 +25,6 @@ app.use("/api/police-stations", policeStationRoutes);
 app.use("/api/hospitals", hospitalRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/hospital-reviews", hospitalReviewRoutes);
-
-
 
 // Database connection
 connectDB();
