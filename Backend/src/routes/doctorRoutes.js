@@ -14,8 +14,7 @@ const router = express.Router();
 
 router.post("/register", protect, authorizeRoles(Roles.DOCTOR), registerDoctor);
 
-
+//protect,
 // Anyone logged in can view doctors
-router.get("/", protect, getAllDoctors);
-
+router.get("/", getAllDoctors);
 export default router;

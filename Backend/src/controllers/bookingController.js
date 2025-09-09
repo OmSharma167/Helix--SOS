@@ -57,21 +57,49 @@ export const getDoctorBookings = async (req, res) => {
   }
 };
 
-// @desc Update booking status (doctor only)
-// @route PUT /api/bookings/:id/status
+// // @desc Update booking status (doctor only)
+// // @route PUT /api/bookings/:id/status
+// export const updateBookingStatus = async (req, res) => {
+//   try {
+//     const { status } = req.body;
+
+//     const booking = await Booking.findById(req.params.id);
+//     if (!booking) {
+//       return res.status(404).json({ message: "Booking not found" });
+//     }
+
+//     booking.status = status || booking.status;
+//     await booking.save();
+
+//     res.json({ message: "Booking updated", booking });
+//   } catch (error) {
+//     res.status(500).json({ message: "Failed to update booking" });
+//   }
+// };
+
+
+
+// ✅ Doctor accepts or rejects appointment
 export const updateBookingStatus = async (req, res) => {
   try {
     const { status } = req.body;
 
-    const booking = await Booking.findById(req.params.id);
-    if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
+    if (!["Confirmed", "Cancelled"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
     }
 
-    booking.status = status || booking.status;
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
+
+    // Ensure the doctor owns this booking
+    if (booking.doctorId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    booking.status = status;
     await booking.save();
 
-    res.json({ message: "Booking updated", booking });
+    res.json({ message: `Booking ${status.toLowerCase()} successfully`, booking });
   } catch (error) {
     res.status(500).json({ message: "Failed to update booking" });
   }
