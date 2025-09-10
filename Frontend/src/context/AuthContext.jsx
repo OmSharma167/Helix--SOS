@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           const res = await me();
-          setUser(res);
+          // setUser(res);
+          setUser({ ...res, token });
         } catch (err) {
           console.error("Auto-login failed:", err);
           localStorage.removeItem("token");
