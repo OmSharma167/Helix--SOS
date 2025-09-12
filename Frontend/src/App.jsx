@@ -9,8 +9,8 @@ import DoctorListPage from "./pages/DoctorListPage";
 import BookDoctorPage from "./pages/BookDoctorPage";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import DoctorBookingsPage from "./pages/DoctorBookingsPage";
-// import HospitalRegistrationForm from "./pages/HospitalRegistrationForm";
-// import PoliceStationRegistrationForm from "./pages/PoliceStationRegistrationForm";
+import HospitalRegistrationForm from "./pages/HospitalRegistrationForm";
+import PoliceStationRegistrationForm from "./pages/PoliceStationRegistrationForm";
 
 function App() {
   return (
@@ -23,14 +23,14 @@ function App() {
       <Route path="/book-doctor/:id" element={<BookDoctorPage />} />
       <Route path="/my-bookings" element={<MyBookingsPage />} />
       <Route path="/doctor/bookings" element={<DoctorBookingsPage />} />
-      {/* <Route
+      <Route
         path="/hospital-registration"
         element={<HospitalRegistrationForm />}
       />
       <Route
         path="/police-registration"
         element={<PoliceStationRegistrationForm />}
-      /> */}
+      />
     </Routes>
   );
 }
