@@ -11,6 +11,7 @@ import policeStationRoutes from "./routes/policeStationRoutes.js";
 import hospitalRoutes from "./routes/hospitalRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import hospitalReviewRoutes from "./routes/hospitalReviewRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 dotenv.config();
 const app = express();
 // Middleware
@@ -25,6 +26,8 @@ app.use("/api/police-stations", policeStationRoutes);
 app.use("/api/hospitals", hospitalRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/hospital-reviews", hospitalReviewRoutes);
+// app.use("/api/upload", uploadRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // Database connection
 connectDB();

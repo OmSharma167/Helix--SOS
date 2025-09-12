@@ -9,6 +9,9 @@ import DoctorListPage from "./pages/DoctorListPage";
 import BookDoctorPage from "./pages/BookDoctorPage";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import DoctorBookingsPage from "./pages/DoctorBookingsPage";
+import RegisterAmbulance from "./pages/AmbulanceForm";
+import ImageUpload from "./ImageUpload";
+
 // import HospitalRegistrationForm from "./pages/HospitalRegistrationForm";
 // import PoliceStationRegistrationForm from "./pages/PoliceStationRegistrationForm";
 
@@ -23,6 +26,8 @@ function App() {
       <Route path="/book-doctor/:id" element={<BookDoctorPage />} />
       <Route path="/my-bookings" element={<MyBookingsPage />} />
       <Route path="/doctor/bookings" element={<DoctorBookingsPage />} />
+      <Route path="/Ambulance/form" element={<RegisterAmbulance />} />
+      <Route path="/upload" element={<ImageUpload/>} />
       {/* <Route
         path="/hospital-registration"
         element={<HospitalRegistrationForm />}

@@ -41,6 +41,10 @@ const ambulanceSchema = new mongoose.Schema(
       enum: ["Available", "Busy"],
       default: "Available",
     },
+    imageUrl: {
+      type: String, // Cloudinary or other image hosting URL
+      default: "", // optional fallback
+    },
   },
   { timestamps: true }
 );
