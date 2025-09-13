@@ -1,7 +1,9 @@
 // src/services/bookingService.js
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/bookings";
+// const API_URL = "http://localhost:5000/api/bookings";
+
+const API_URL = `${import.meta.env.VITE_API_URL}/bookings`;
 
 export const createBooking = async (bookingData, token) => {
   const res = await axios.post(API_URL, bookingData, {
