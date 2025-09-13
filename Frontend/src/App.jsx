@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/Home";
+// import HomePage from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import DoctorFormPage from "./pages/DoctorFormPage";
@@ -11,6 +11,8 @@ import MyBookingsPage from "./pages/MyBookingsPage";
 import DoctorBookingsPage from "./pages/DoctorBookingsPage";
 import RegisterAmbulance from "./pages/AmbulanceForm";
 import ImageUpload from "./ImageUpload";
+import HelixSOSApp from "./Component/LandingPage/HelixSOSApp";
+// import HelixSOSApp from "./Component/HelixSOSApp";
 
 // import HospitalRegistrationForm from "./pages/HospitalRegistrationForm";
 // import PoliceStationRegistrationForm from "./pages/PoliceStationRegistrationForm";
@@ -18,7 +20,8 @@ import ImageUpload from "./ImageUpload";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      {/* <Route path="/" element={<HomePage />} /> */}
+      <Route path="/" element={<HelixSOSApp />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/doctor/register" element={<DoctorFormPage />} />
@@ -27,7 +30,9 @@ function App() {
       <Route path="/my-bookings" element={<MyBookingsPage />} />
       <Route path="/doctor/bookings" element={<DoctorBookingsPage />} />
       <Route path="/Ambulance/form" element={<RegisterAmbulance />} />
-      <Route path="/upload" element={<ImageUpload/>} />
+      <Route path="/upload" element={<ImageUpload />} />
+    
+
       {/* <Route
         path="/hospital-registration"
         element={<HospitalRegistrationForm />}

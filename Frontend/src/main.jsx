@@ -5,12 +5,18 @@ import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter } from "react-router-dom";
+import Header from "./Component/LandingPage/Header.jsx";
+import Footer from "./Component/LandingPage/Footer.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <BrowserRouter>
-        <App />
+        <Header />
+        
+          <App />
+   
+        <Footer />
       </BrowserRouter>
     </AuthProvider>
   </StrictMode>
