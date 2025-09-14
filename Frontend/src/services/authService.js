@@ -1,12 +1,12 @@
 import axios from "axios";
 
-// const API = axios.create({
-//   baseURL: "http://localhost:5000/api/users", // your backend URL
-// });
-
 const API = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/users`, 
+  baseURL: "http://localhost:5000/api/users", // your backend URL
 });
+
+// const API = axios.create({
+//   baseURL: `${import.meta.env.VITE_API_URL}/users`, 
+// });
 //"/api/users
 // Signup
 export const signupUser = async (userData) => {

@@ -15,7 +15,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed  w-full z-50 top-0">
+    <header className="fixed  w-full bg-cyan-700 z-50 top-0">
       <div className="max-w-7xl mx-auto">
         <div
           className={`rounded-b-xl flex items-center justify-between py-3 px-4 md:px-6 transition-all duration-300 ${
@@ -51,7 +51,7 @@ export default function Header() {
                 </svg>
               </div>
               <div>
-                <div className="text-lg md:text-2xl font-extrabold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                <div className="text-lg md:text-2xl font-extrabold bg-gradient-to-r from-white to-blue-200 t">
                   Helix<span className="text-rose-400">SOS</span>
                 </div>
                 <div className="text-xs text-white/70">24/7 Emergency</div>
@@ -64,24 +64,30 @@ export default function Header() {
             {/* <a href="#" className="hover:text-white">
               Telemedicine
             </a> */}
-            <Link to="/doctors" className="text-white/80 hover:text-white">
+            <Link
+              to="/doctors"
+              className="text-white/80 font-bold hover:text-white"
+            >
               Telemedicine
             </Link>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white font-bold">
               Pharmacy
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white font-bold">
               Emergency
             </a>
             <div className="ml-4 flex items-center gap-3">
               {!user ? (
                 <>
-                  <Link to="/login" className="text-white/80 hover:text-white">
+                  <Link
+                    to="/login"
+                    className="text-white/80 hover:text-white font-bold"
+                  >
                     Login
                   </Link>
                   <Link
                     to="/signup"
-                    className="px-4 py-2 rounded-full bg-white text-indigo-700 font-semibold hover:bg-white/90 transition"
+                    className="px-4 py-2 rounded-full bg-white text-indigo-700 font-semibold font-bold hover:bg-white/90 transition"
                   >
                     Signup
                   </Link>
@@ -111,7 +117,7 @@ export default function Header() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-md bg-white/10 text-white"
+              className="p-2  rounded-md bg-white/10 text-white"
             >
               {isMobileMenuOpen ? "✕" : "☰"}
             </button>

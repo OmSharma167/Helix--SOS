@@ -7,7 +7,7 @@ import FeaturesSection from "./FeaturesSection";
 export default function HelixSOSApp() {
   return (
     <>
-      <main className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800">
+      <main className="relative min-h-screen flex items-center justify-center pt-6 md:pt-20  bg-gradient-to-br bg-[#2a7eaf] from-indigo-900  via-purple-900 ">
         <div className="absolute inset-0 opacity-30">
           <div
             className="absolute inset-0"
@@ -20,7 +20,6 @@ export default function HelixSOSApp() {
         <HeroSection />
       </main>
       <FeaturesSection />
-      
     </>
   );
 }
