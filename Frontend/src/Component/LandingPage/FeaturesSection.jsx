@@ -30,6 +30,13 @@ const services = [
     icon: "👨‍⚕️",
     link: "/doctors",
   },
+  {
+    title: "Fire Brigade",
+    desc: "Request emergency fire brigade support instantly with real-time tracking.",
+    color: "bg-orange-500/20 text-orange-300",
+    icon: "🚒",
+    link: "/firebrigade",
+  },
 ];
 
 export default function FeaturesSection() {
@@ -37,14 +44,14 @@ export default function FeaturesSection() {
     <section className="py-20 bg-slate-900">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-slate-100">
-          Our Healthcare Services
+          Our Healthcare & Emergency Services
         </h2>
         <p className="mt-4 text-lg text-slate-400 text-center max-w-2xl mx-auto">
           HelixSOS brings emergency and healthcare services at your fingertips —
           fast, reliable, and secure.
         </p>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {services.map((s, i) => (
             <article
               key={i}

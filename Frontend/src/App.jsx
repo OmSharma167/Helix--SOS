@@ -21,6 +21,7 @@ import HelixSOSApp from "./Component/LandingPage/HelixSOSApp";
 import HospitalApp from "./Component/Hospital/HospitalApp";
 import HealthConsultationInterface from "./Component/Chatbot/chatbot";
 
+
 function App() {
   return (
     <Routes>
@@ -50,6 +51,12 @@ function App() {
       <Route path="/chat-bot" element={<HealthConsultationInterface />} />
       //HospitalApp
       <Route path="/Hospital-App" element={<HospitalApp />} />
+      //HospitalRegistrationForm
+      <Route
+        path="/HospitalRegistrationForm"
+        element={<HospitalRegistrationForm />}
+      />
+    
     </Routes>
   );
 }

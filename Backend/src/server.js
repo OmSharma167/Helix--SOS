@@ -27,6 +27,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/bookings", bookingRoutes);
+// app.use("/api/ambulances", ambulanceRoutes);
 app.use("/api/ambulances", ambulanceRoutes);
 app.use("/api/emergencies", emergencyRoutes);
 app.use("/api/police-stations", policeStationRoutes);

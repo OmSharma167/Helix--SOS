@@ -27,7 +27,7 @@ const hospitalSchema = new mongoose.Schema(
         default: "Point",
       },
       coordinates: {
-        type: [Number], 
+        type: [Number],
         required: true,
       },
     },
@@ -87,6 +87,42 @@ const hospitalSchema = new mongoose.Schema(
     gallery: [
       {
         type: String, // Cloudinary or S3 image URLs
+      },
+    ],
+
+    // Appointments for the hospital
+    appointments: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        doctor: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Doctor",
+        },
+        appointmentDate: {
+          type: Date,
+          required: true,
+        },
+        appointmentTime: {
+          type: String,
+          required: true,
+        },
+        status: {
+          type: String,
+          enum: ["Pending", "Confirmed", "Cancelled", "Completed"],
+          default: "Pending",
+        },
+        reason: {
+          type: String,
+          trim: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
   },

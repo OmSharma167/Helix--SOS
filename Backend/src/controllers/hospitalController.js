@@ -1,122 +1,3 @@
-// import Hospital from "../models/Hospital/Hospital.js";
-
-// // 1. Register a hospital
-// export const registerHospital = async (req, res) => {
-//   try {
-//     const {
-//       name,
-//       contactNumber,
-//       email,
-//       address,
-//       location,
-//       facilities,
-//       ambulances,
-//       imageUrl,
-//       gallery,
-//     } = req.body;
-
-//     const hospital = await Hospital.create({
-//       name,
-//       contactNumber,
-//       email,
-//       address,
-//       location,
-//       facilities,
-//       ambulances,
-//       imageUrl,
-//       gallery,
-//     });
-
-//     res.status(201).json({
-//       message: "🏥 Hospital registered successfully",
-//       hospital,
-//     });
-//   } catch (error) {
-//     console.error("Hospital Register Error:", error);
-//     res.status(400).json({ message: error.message });
-//   }
-// };
-
-// // 2. Get all hospitals
-// export const getAllHospitals = async (req, res) => {
-//   try {
-//     const hospitals = await Hospital.find().populate("ambulances");
-//     res.status(200).json(hospitals);
-//   } catch (error) {
-//     res.status(500).json({ message: "Failed to fetch hospitals" });
-//   }
-// };
-
-// // 3. Get hospital by ID
-// export const getHospitalById = async (req, res) => {
-//   try {
-//     const hospital = await Hospital.findById(req.params.id).populate(
-//       "ambulances"
-//     );
-
-//     if (!hospital) {
-//       return res.status(404).json({ message: "Hospital not found" });
-//     }
-
-//     res.status(200).json(hospital);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-// // 4. Find nearest hospitals
-// export const findNearestHospitals = async (req, res) => {
-//   try {
-//     const { longitude, latitude } = req.query;
-
-//     if (!longitude || !latitude) {
-//       return res
-//         .status(400)
-//         .json({ message: "Longitude & Latitude are required" });
-//     }
-
-//     const hospitals = await Hospital.find({
-//       location: {
-//         $near: {
-//           $geometry: {
-//             type: "Point",
-//             coordinates: [parseFloat(longitude), parseFloat(latitude)],
-//           },
-//           $maxDistance: 10000, // within 10 km
-//         },
-//       },
-//       availability: "Available",
-//     });
-
-//     res.status(200).json(hospitals);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-// // 5. Update hospital availability
-// export const updateHospitalAvailability = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { availability } = req.body;
-
-//     const hospital = await Hospital.findById(id);
-//     if (!hospital) {
-//       return res.status(404).json({ message: "Hospital not found" });
-//     }
-
-//     hospital.availability = availability || hospital.availability;
-//     await hospital.save();
-
-//     res.status(200).json({
-//       message: "Hospital availability updated ✅",
-//       hospital,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 
 
 // import Hospital from "../models/Hospital.js";
@@ -125,35 +6,6 @@ import Hospital from "../models/Hospital/Hospital.js";
 import Roles from "../enum/roles.js";
 import axios from "axios";
 import { validationResult } from "express-validator";
-
-// Utility function to get coordinates from address using Mapbox Geocoding API
-// const getCoordinatesFromAddress = async (address) => {
-//   try {
-//     const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN;
-//     if (!mapboxToken) {
-//       throw new Error("Mapbox access token not configured");
-//     }
-
-//     const encodedAddress = encodeURIComponent(address);
-//     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedAddress}.json?access_token=${mapboxToken}&limit=1`;
-
-//     const response = await axios.get(url);
-
-//     if (response.data.features && response.data.features.length > 0) {
-//       const coordinates = response.data.features[0].center;
-//       return {
-//         longitude: coordinates[0],
-//         latitude: coordinates[1],
-//       };
-//     } else {
-//       throw new Error("Address not found");
-//     }
-//   } catch (error) {
-//     console.error("Geocoding error:", error.message);
-//     throw new Error("Failed to get coordinates from address");
-//   }
-// };
-
 
 
 export const getCoordinatesFromAddress = async (address) => {
@@ -601,6 +453,91 @@ export const deleteHospital = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to delete hospital",
+      error:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Internal server error",
+    });
+  }
+};
+
+
+
+
+
+// Appontment
+
+
+
+export const bookAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { appointmentDate, appointmentTime, reason, doctor } = req.body;
+
+    const hospital = await Hospital.findById(id);
+    if (!hospital) {
+      return res.status(404).json({
+        success: false,
+        message: "Hospital not found",
+      });
+    }
+
+    const appointment = {
+      user: req.user._id,
+      doctor,
+      appointmentDate,
+      appointmentTime,
+      reason,
+      status: "Pending",
+    };
+
+    hospital.appointments.push(appointment);
+    await hospital.save();
+
+    res.status(201).json({
+      success: true,
+      data: appointment,
+    });
+  } catch (error) {
+    console.error("Book appointment error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to book appointment",
+      error:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Internal server error",
+    });
+  }
+};
+
+// @desc    Get all appointments for a hospital
+// @route   GET /api/hospitals/:id/appointments
+// @access  Private
+export const getAppointments = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const hospital = await Hospital.findById(id)
+      .populate("appointments.user", "name email")
+      .populate("appointments.doctor", "name specialty");
+
+    if (!hospital) {
+      return res.status(404).json({
+        success: false,
+        message: "Hospital not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: hospital.appointments,
+    });
+  } catch (error) {
+    console.error("Get appointments error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch appointments",
       error:
         process.env.NODE_ENV === "development"
           ? error.message
