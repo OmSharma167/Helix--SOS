@@ -12,8 +12,60 @@ import hospitalRoutes from "./routes/hospitalRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import hospitalReviewRoutes from "./routes/hospitalReviewRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import fireBrigadeRoutes from "./routes/fireBrigadeRoutes.js";
+
+
+import http from "http";
+import { Server } from "socket.io";
+
+
+
+
+
 dotenv.config();
 const app = express();
+
+
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: "*" } });
+
+app.use((req, res, next) => {
+  req.io = io; // attach io to request object
+  next();
+});
+
+// Socket.io events
+io.on("connection", (socket) => {
+  console.log("Provider connected:", socket.id);
+
+  // Join a room for a provider (room = providerId)
+  socket.on("joinProviderRoom", (providerId) => {
+    socket.join(providerId);
+  });
+
+  // Accept/Reject SOS
+  socket.on("respondSOS", async ({ sosId, providerId, status }) => {
+    const SOSRequest = require("./models/FireBrigade/SOSRequest.js").default;
+    const sos = await SOSRequest.findById(sosId);
+    if (!sos) return;
+
+    const providerEntry = sos.nearestProviders.find((p) => p.providerId.toString() === providerId);
+    if (providerEntry) {
+      providerEntry.status = status;
+      await sos.save();
+
+      // Notify user or other providers if needed
+      io.to(providerId).emit("sosResponseUpdate", sos);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Provider disconnected:", socket.id);
+  });
+});
+
+
+
 // Middleware
 app.use(cors());
 // app.use(
@@ -37,6 +89,9 @@ app.use("/api/hospital-reviews", hospitalReviewRoutes);
 // app.use("/api/upload", uploadRoutes);
 app.use("/api/upload", uploadRoutes);
 
+app.use("/api/fire-brigades", fireBrigadeRoutes);
+
+
 // Database connection
 connectDB();
 
@@ -47,4 +102,9 @@ app.get("/", (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Start server
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

@@ -20,6 +20,14 @@ import HelixSOSApp from "./Component/LandingPage/HelixSOSApp";
 // import HealthConsultationInterface from "./Component/Chatbot/chatbot";
 import HospitalApp from "./Component/Hospital/HospitalApp";
 import HealthConsultationInterface from "./Component/Chatbot/chatbot";
+import AmbulanceSystem from "./pages/AmbulanceForm";
+import FirebrigadeRegistration from "./Component/Firebrigade/FirebrigadeRegistration";
+import FirebrigadeDashboard from "./Component/Firebrigade/FirebrigadeDashboard";
+import FirebrigadeList from "./Component/Firebrigade/FirebrigadeList";
+import ProviderDashboard from "./Component/Firebrigade/FirebrigadeDashboard";
+
+
+
 
 
 function App() {
@@ -45,7 +53,7 @@ function App() {
         path="/police-registration"
         element={<PoliceStationRegistrationForm />}
       />
-      <Route path="/ambulance/form" element={<RegisterAmbulance />} />
+      <Route path="/ambulance/form" element={<AmbulanceSystem />} />
       {/* Other */}
       <Route path="/upload" element={<ImageUpload />} />
       <Route path="/chat-bot" element={<HealthConsultationInterface />} />
@@ -56,7 +64,17 @@ function App() {
         path="/HospitalRegistrationForm"
         element={<HospitalRegistrationForm />}
       />
-    
+      <Route
+        path="/firebrigade/register"
+        element={<FirebrigadeRegistration />}
+      />
+      <Route path="/firebrigade/dashboard" element={<FirebrigadeDashboard />} />
+      //FirebrigadeList
+      <Route path="/firebrigade-list" element={<FirebrigadeList />} />
+      {/* <Route path="/firebrigade/bookings" element={<FirebrigadeBookings />} />
+      <Route path="/firebrigade/profile" element={<FirebrigadeProfile />} /> */}
+      //ProviderDashboard
+      <Route path="/ProviderDashboard" element={<ProviderDashboard />} />
     </Routes>
   );
 }
