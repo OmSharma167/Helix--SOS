@@ -160,8 +160,10 @@ import {
   getNearestFirebrigades,
   deleteFirebrigade,
   sendSOS, // ✅ import the new controller
+  getSOSForProvider,
 } from "../controllers/fireBrigadeController.js";
 import { body } from "express-validator";
+import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -193,5 +195,6 @@ router.delete("/:id", deleteFirebrigade);
 
 // ✅ Add SOS route
 router.post("/sos", sendSOS);
+router.get("/sos/provider/:providerId", protect, getSOSForProvider);
 
 export default router;

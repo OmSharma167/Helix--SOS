@@ -35,7 +35,7 @@ const services = [
     desc: "Request emergency fire brigade support instantly with real-time tracking.",
     color: "bg-orange-500/20 text-orange-300",
     icon: "🚒",
-    link: "/firebrigade",
+    link: "/firebrigade-list",
   },
 ];
 

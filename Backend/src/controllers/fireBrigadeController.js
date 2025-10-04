@@ -420,7 +420,7 @@ export const getAllFirebrigades = async (req, res) => {
 // @access  Public
 export const getNearestFirebrigades = async (req, res) => {
   try {
-    const { latitude, longitude, maxDistance = 10000, limit = 10 } = req.query;
+    const { latitude, longitude, maxDistance = 20000, limit = 10 } = req.query;
 
     if (!latitude || !longitude) {
       return res.status(400).json({
@@ -513,16 +513,22 @@ export const deleteFirebrigade = async (req, res) => {
 
 // for SOS
 
+
+
+// controllers/fireBrigadeController.js - Update sendSOS function
 export const sendSOS = async (req, res) => {
   try {
     const { latitude, longitude } = req.body;
+    const userId = req.user?._id; // Get user from auth middleware
 
     if (!latitude || !longitude) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Location required" });
+      return res.status(400).json({ 
+        success: false, 
+        message: "Location required" 
+      });
     }
 
+    // Find nearest available firebrigades
     const nearestProviders = await Firebrigade.find({
       availability: "Available",
       location: {
@@ -531,43 +537,82 @@ export const sendSOS = async (req, res) => {
             type: "Point",
             coordinates: [parseFloat(longitude), parseFloat(latitude)],
           },
-          $maxDistance: 10000,
+          $maxDistance: 10000, // 10km
         },
       },
     }).limit(5);
 
     if (!nearestProviders || nearestProviders.length === 0) {
-      return res
-        .status(404)
-        .json({ success: false, message: "No providers found nearby" });
+      return res.status(404).json({ 
+        success: false, 
+        message: "No fire brigades found nearby" 
+      });
     }
 
+    // Create SOS request
     const sosRequest = new SOSRequest({
-      userId: req.user?._id || null,
+      userId: userId || null,
       location: {
         type: "Point",
         coordinates: [parseFloat(longitude), parseFloat(latitude)],
       },
-      nearestProviders: nearestProviders.map((p) => ({ providerId: p._id })),
+      nearestProviders: nearestProviders.map((p) => ({ 
+        providerId: p.userId, // Use userId instead of firebrigade _id
+        firebrigadeId: p._id,
+        status: "Pending" 
+      })),
     });
 
     await sosRequest.save();
 
-    req.io.emit("newSOS", sosRequest);
+    // Populate the SOS request with user details before emitting
+    const populatedSOS = await SOSRequest.findById(sosRequest._id)
+      .populate('userId', 'name email phone')
+      .populate('nearestProviders.providerId', 'name email');
+
+    // Emit to all provider rooms
+    nearestProviders.forEach(provider => {
+      req.io.to(provider.userId.toString()).emit("newSOS", populatedSOS);
+    });
 
     res.status(201).json({
       success: true,
-      message: "SOS sent to nearest providers",
-      data: sosRequest,
+      message: "SOS sent to nearest fire brigades",
+      data: populatedSOS,
     });
   } catch (error) {
     console.error("Send SOS error:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to send SOS",
-        error: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Failed to send SOS",
+      error: error.message,
+    });
+  }
+};
+
+export const getSOSForProvider = async (req, res) => {
+  try {
+    const { providerId } = req.params;
+    const sosRequests = await SOSRequest.find({
+      "nearestProviders.providerId": providerId,
+    })
+      .populate("userId", "name email phone")
+      .populate("nearestProviders.providerId", "name email")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      data: sosRequests,
+    });
+  } catch (error) {
+    console.error("Get SOS for provider error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to get SOS requests",
+      error:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Internal server error",
+    });
   }
 };

@@ -196,85 +196,123 @@ const HealthConsultationInterface = () => {
     };
 
     const fetchAIResponse = useCallback(async (prompt) => {
-        const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-        
-        if (!apiKey) {
-           throw new Error("API key is missing. Please add your Gemini API key.");
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+      if (!apiKey) {
+        throw new Error("API key is missing. Please add your Gemini API key.");
+      }
+
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
+
+      const promptWithDisclaimer = `As an AI assistant, I can provide general health information and suggestions, but this should not be considered medical advice. Please consult healthcare professionals for specific medical concerns. Query: ${prompt}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [
+                  {
+                    text: promptWithDisclaimer,
+                  },
+                ],
+              },
+            ],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 1000,
+            },
+            safetySettings: [
+              {
+                category: "HARM_CATEGORY_HARASSMENT",
+                threshold: "BLOCK_MEDIUM_AND_ABOVE",
+              },
+              {
+                category: "HARM_CATEGORY_HATE_SPEECH",
+                threshold: "BLOCK_MEDIUM_AND_ABOVE",
+              },
+              {
+                category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                threshold: "BLOCK_MEDIUM_AND_ABOVE",
+              },
+              {
+                category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                threshold: "BLOCK_MEDIUM_AND_ABOVE",
+              },
+            ],
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API Error:", errorData);
+          throw new Error(
+            `Error: ${response.status} - ${
+              errorData.error?.message || response.statusText
+            }`
+          );
         }
 
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const data = await response.json();
 
-        const promptWithDisclaimer = `As an AI assistant, I can provide general health information and suggestions, but this should not be considered medical advice. Please consult healthcare professionals for specific medical concerns. Query: ${prompt}`;
+        // Extract the response text from the correct Gemini API structure
+        const responseText =
+          data.candidates?.[0]?.content?.parts?.[0]?.text ||
+          "I couldn't generate a response. Please try again.";
 
-        try {
-            const response = await fetch(apiUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptWithDisclaimer }] }]
-                }),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("API Error:", errorData);
-                throw new Error(`Error: ${response.status} - ${errorData.error?.message || response.statusText}`);
-            }
-
-            const data = await response.json();
-            return (
-                data.candidates?.[0]?.content?.parts?.[0]?.text ||
-                "I couldn't fetch a response. Try again later."
-            );
-        } catch (error) {
-            console.error("Error:", error);
-            throw error;
-        }
+        return responseText;
+      } catch (error) {
+        console.error("Error:", error);
+        throw error;
+      }
     }, []);
-
+    // Handle form submission
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!inputMessage.trim() || loading) return;
+      e.preventDefault();
+      if (!inputMessage.trim() || loading) return;
 
-        const newMessage = {
-            role: "user",
-            content: inputMessage,
+      const newMessage = {
+        role: "user",
+        content: inputMessage,
+        timestamp: new Date().toISOString(),
+      };
+
+      setMessages((prev) => [...prev, newMessage]);
+      setInputMessage("");
+      setLoading(true);
+
+      try {
+        const aiResponse = await fetchAIResponse(inputMessage);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: aiResponse,
             timestamp: new Date().toISOString(),
-        };
+          },
+        ]);
 
-        setMessages((prev) => [...prev, newMessage]);
-        setInputMessage("");
-        setLoading(true);
-
-        try {
-            const aiResponse = await fetchAIResponse(inputMessage);
-            setMessages((prev) => [
-                ...prev,
-                {
-                    role: "assistant",
-                    content: aiResponse,
-                    timestamp: new Date().toISOString(),
-                },
-            ]);
-
-            if (currentChatTitle === "") {
-                setShowSaveDialog(true);
-            }
-        } catch (error) {
-            console.error("Chat error:", error);
-            setMessages((prev) => [
-                ...prev,
-                {
-                    role: "assistant",
-                    content: `There was an error: ${error.message}. Please check your API key and network connection.`,
-                    timestamp: new Date().toISOString(),
-                },
-            ]);
-        } finally {
-            setLoading(false);
+        if (currentChatTitle === "") {
+          setShowSaveDialog(true);
         }
+      } catch (error) {
+        console.error("Chat error:", error);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: `There was an error: ${error.message}. Please check your API key and network connection.`,
+            timestamp: new Date().toISOString(),
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
     };
 
+   
     const handleSaveChat = () => {
         if (!currentChatTitle.trim()) return;
         setSavedChats((prev) => ({

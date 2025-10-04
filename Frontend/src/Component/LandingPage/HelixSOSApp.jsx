@@ -2,6 +2,7 @@ import React from "react";
 // import Header from "./Header";
 import HeroSection from "./HeroSection";
 import FeaturesSection from "./FeaturesSection";
+import Footer from "./Footer"
 
 
 export default function HelixSOSApp() {
@@ -20,6 +21,7 @@ export default function HelixSOSApp() {
         <HeroSection />
       </main>
       <FeaturesSection />
+      <Footer />
     </>
   );
 }

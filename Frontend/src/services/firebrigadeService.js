@@ -40,6 +40,23 @@ export const firebrigadeService = {
 
   // Delete firebrigade
   deleteFirebrigade: (id) => api.delete(`/fire-brigades/${id}`),
+
+  getSOSForProvider: (providerId) =>
+    api.get(`/fire-brigades/sos/provider/${providerId}`),
+};
+
+
+
+export const updateFirebrigadeLocation = async (userId, location) => {
+  try {
+    const response = await axios.put(`/api/firebrigade/${userId}/location`, {
+      location,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating firebrigade location:", error);
+    throw error;
+  }
 };
 
 // Named exports for flexibility
@@ -52,4 +69,5 @@ export const {
   getAllFirebrigades,
   getNearestFirebrigades,
   deleteFirebrigade,
+  getSOSForProvider,
 } = firebrigadeService;
