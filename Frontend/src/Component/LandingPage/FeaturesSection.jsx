@@ -41,39 +41,44 @@ const services = [
 
 export default function FeaturesSection() {
   return (
-    <section className="py-20 bg-slate-900">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-slate-100">
+    <section className="py-20 relative bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 overflow-hidden">
+      {/* Background blur and glow layers */}
+      <div className="absolute inset-0 backdrop-blur-3xl bg-slate-900/50"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-indigo-500/10 via-transparent to-transparent"></div>
+
+      <div className="relative max-w-7xl mx-auto px-6">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white drop-shadow-lg">
           Our Healthcare & Emergency Services
         </h2>
-        <p className="mt-4 text-lg text-slate-400 text-center max-w-2xl mx-auto">
-          HelixSOS brings emergency and healthcare services at your fingertips —
-          fast, reliable, and secure.
+        <p className="mt-4 text-lg text-slate-300 text-center max-w-2xl mx-auto">
+          HelixSOS brings emergency and healthcare services at your fingertips —{" "}
+          <span className="text-indigo-400 font-semibold">
+            fast, reliable, and secure.
+          </span>
         </p>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {services.map((s, i) => (
             <article
               key={i}
-              className="p-6 bg-slate-800/60 border border-slate-700 rounded-2xl hover:scale-105 transition"
+              className="p-6 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl hover:scale-105 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.3)] transition-all duration-300"
             >
               <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center ${s.color} mb-4`}
+                className={`w-14 h-14 rounded-xl flex items-center justify-center ${s.color} mb-4 shadow-inner`}
               >
-                <span className="text-2xl">{s.icon}</span>
+                <span className="text-3xl">{s.icon}</span>
               </div>
-              <h3 className="text-lg font-semibold text-slate-100">
-                {s.title}
-              </h3>
-              <p className="text-sm text-slate-400 mt-2">{s.desc}</p>
+              <h3 className="text-lg font-semibold text-white">{s.title}</h3>
+              <p className="text-sm text-slate-300 mt-2 leading-relaxed">
+                {s.desc}
+              </p>
 
-              {/* Redirect button */}
-              <div className="mt-4">
+              <div className="mt-5">
                 <Link
                   to={s.link}
-                  className="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition"
+                  className="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 hover:shadow-lg transition-all duration-300"
                 >
-                  Click
+                  Explore
                 </Link>
               </div>
             </article>
