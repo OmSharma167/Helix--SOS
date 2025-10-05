@@ -7,7 +7,7 @@ const services = [
     desc: "Book an ambulance instantly with live tracking and the fastest route to hospitals.",
     color: "bg-rose-500/20 text-rose-300",
     icon: "🚑",
-    link: "/ambulance",
+    link: "/ambulances",
   },
   {
     title: "Nearest Pharmacy",

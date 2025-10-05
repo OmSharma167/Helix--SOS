@@ -25,7 +25,8 @@ import FirebrigadeRegistration from "./Component/Firebrigade/FirebrigadeRegistra
 import FirebrigadeDashboard from "./Component/Firebrigade/FirebrigadeDashboard";
 import FirebrigadeList from "./Component/Firebrigade/FirebrigadeList";
 import ProviderDashboard from "./Component/Firebrigade/FirebrigadeDashboard";
-import EmergencyAmbulanceSystem from "./Component/Ambulance/EmergencyAmbulanceSystem";
+import AboutPage from "./Component/About/about";
+import AmbulancesPage from "./pages/AmbulancesPage";
 
 
 
@@ -73,11 +74,10 @@ function App() {
       //FirebrigadeList
       <Route path="/firebrigade-list" element={<FirebrigadeList />} />
       <Route path="/ProviderDashboard" element={<ProviderDashboard />} />
-      //EmergencyAmbulanceSystem
-      <Route
-        path="/EmergencyAmbulanceSystem"
-        element={<EmergencyAmbulanceSystem />}
-      />
+    
+   
+      <Route path="/AboutPage" element={<AboutPage />} />
+      <Route path="/ambulances" element={<AmbulancesPage />} />
     </Routes>
   );
 }
