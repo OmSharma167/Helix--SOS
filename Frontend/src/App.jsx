@@ -6,7 +6,7 @@ import HomePage from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import DoctorFormPage from "./pages/DoctorFormPage";
-import DoctorListPage from "./pages/DoctorListPage";
+// import DoctorListPage from "./pages/DoctorListPage";
 import BookDoctorPage from "./pages/BookDoctorPage";
 import MyBookingsPage from "./pages/MyBookingsPage";
 import DoctorBookingsPage from "./pages/DoctorBookingsPage";
@@ -25,8 +25,16 @@ import FirebrigadeRegistration from "./Component/Firebrigade/FirebrigadeRegistra
 import FirebrigadeDashboard from "./Component/Firebrigade/FirebrigadeDashboard";
 import FirebrigadeList from "./Component/Firebrigade/FirebrigadeList";
 import ProviderDashboard from "./Component/Firebrigade/FirebrigadeDashboard";
+// import fireLandingpage from "./Component/Firebrigade/FireLandingpage"
+// import FireLandingpage from "./Component/Firebrigade/FireLandingpage";
 import AboutPage from "./Component/About/about";
 import AmbulancesPage from "./pages/AmbulancesPage";
+import FireLandingpage from "./Component/Firebrigade/FireLanding/FireLandingpage";
+import DoctorLandingpage from "./Component/Doctor/DoctorLandingPage/DoctorLandinpage";
+import DoctorsSection from "./Component/Doctor/DoctorLandingPage/DoctorsSection";
+import SOSButton from "./Component/Firebrigade/SOSButton";
+import PathologyTest from "./Component/Pathology/PathologyTest";
+import PharmacyLanding from "./Component/Pharmacy/PharmacyLanding";
 
 
 
@@ -42,7 +50,7 @@ function App() {
       <Route path="/signup" element={<SignupPage />} />
       {/* Doctor */}
       <Route path="/doctor/register" element={<DoctorFormPage />} />
-      <Route path="/doctors" element={<DoctorListPage />} />
+      {/* <Route path="/doctors" element={<DoctorListPage />} /> */}
       <Route path="/book-doctor/:id" element={<BookDoctorPage />} />
       <Route path="/my-bookings" element={<MyBookingsPage />} />
       <Route path="/doctor/bookings" element={<DoctorBookingsPage />} />
@@ -73,11 +81,19 @@ function App() {
       <Route path="/firebrigade/dashboard" element={<FirebrigadeDashboard />} />
       //FirebrigadeList
       <Route path="/firebrigade-list" element={<FirebrigadeList />} />
+      //SOSButton
+      <Route path="/SOSButton" element={<SOSButton />} />
       <Route path="/ProviderDashboard" element={<ProviderDashboard />} />
-    
-   
       <Route path="/AboutPage" element={<AboutPage />} />
       <Route path="/ambulances" element={<AmbulancesPage />} />
+      <Route path="/FireLandingpage" element={<FireLandingpage />} />
+      //Doctor
+      <Route path="/DoctorLandingpage" element={<DoctorLandingpage />} />
+      <Route path="/DoctorsSection" element={<DoctorsSection />} />
+      //PathologyTest
+      <Route path="/PathologyTest" element={<PathologyTest />} />
+      //PharmacyLanding
+      <Route path="/PharmacyLanding" element={<PharmacyLanding />} />
     </Routes>
   );
 }

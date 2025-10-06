@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; // ✅ import auth context
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, logout } = useAuth(); // ✅ get user & logout from context
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,9 +17,7 @@ export default function Header() {
   return (
     <header
       className={`fixed w-full top-0 left-0 z-50 transition-colors duration-300 ${
-        isScrolled
-          ? "bg-gradient-to-br from-blue-400 to-purple-500 shadow-md"
-          : "bg-transparent"
+        isScrolled ? "bg-slate-900 shadow-md" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto">
@@ -27,13 +25,13 @@ export default function Header() {
           className={`rounded-b-xl flex items-center justify-between py-3 px-4 md:px-6 transition-all duration-300 ${
             isScrolled
               ? "bg-slate-900/95 backdrop-blur-md border border-white/10 shadow-2xl"
-              : "bg-white/10 backdrop-blur-md border border-white/20"
+              : "bg-slate-900/80 backdrop-blur-md border border-white/20"
           }`}
         >
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
             <div className="inline-flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-slate-900/30 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                 <svg
                   width="20"
                   height="20"
@@ -57,7 +55,7 @@ export default function Header() {
                 </svg>
               </div>
               <div>
-                <div className="text-lg md:text-2xl font-extrabold bg-gradient-to-r from-white to-blue-200">
+                <div className="text-lg md:text-2xl font-extrabold text-white">
                   Helix<span className="text-rose-400">SOS</span>
                 </div>
                 <div className="text-xs text-white/70">24/7 Emergency</div>
@@ -90,14 +88,13 @@ export default function Header() {
                   </Link>
                   <Link
                     to="/signup"
-                    className="px-4 py-2 rounded-full bg-white text-indigo-700 font-semibold hover:bg-white/90 transition"
+                    className="px-4 py-2 rounded-full bg-white text-slate-900 font-semibold hover:bg-white/90 transition"
                   >
                     Signup
                   </Link>
                 </>
               ) : (
                 <>
-                  {/* Show User Name as Profile */}
                   <button
                     onClick={() => navigate("/dashboard")}
                     className="px-3 py-1.5 rounded-full bg-white/20 text-white font-medium hover:bg-white/30 transition"

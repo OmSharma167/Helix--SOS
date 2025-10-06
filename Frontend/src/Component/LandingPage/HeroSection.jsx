@@ -5,7 +5,7 @@ export default function HeroSection() {
   const navigate = useNavigate();
 
   const handleEmergencySOS = () => alert("Emergency SOS triggered");
-  const handleConsultDoctor = () => navigate("/doctors");
+  const handleConsultDoctor = () => navigate("/DoctorLandingpage");
   const handleNearestHospital = () => navigate("/Hospital-App");
   const handleAIAssistant = () => navigate("/chat-bot");
 

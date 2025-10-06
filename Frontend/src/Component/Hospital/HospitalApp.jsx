@@ -11,6 +11,7 @@ import Pagination from "./Pagination";
 import LoadingSpinner from "./LoadingSpinner";
 import EmptyState from "./EmptyState";
 import { getAllHospitals, getNearestHospitals } from "./HospitalAPI.js";
+import HospitalLandingPage from "./HospitalLandingPage.jsx";
 
 const HospitalApp = () => {
   const { user, loading: authLoading } = useAuth(); // Added authLoading
@@ -118,15 +119,9 @@ const HospitalApp = () => {
 
   return (
     <div className="min-h-screen  bg-gray-100">
+      <HospitalLandingPage/>
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            Hospital Management System
-          </h1>
-          <p className="text-gray-600">
-            Find nearby hospitals and manage healthcare facilities
-          </p>
-        </div>
+        
 
         {/* <AuthSection /> */}
         {/* <NavigationTabs

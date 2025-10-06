@@ -14,28 +14,28 @@ const services = [
     desc: "Find and order medicines from the closest pharmacy, delivered to your doorstep.",
     color: "bg-emerald-500/20 text-emerald-300",
     icon: "💊",
-    link: "/pharmacy",
+    link: "/PharmacyLanding",
   },
   {
     title: "Pathology Tests",
     desc: "Book blood tests and diagnostic services with home sample collection.",
     color: "bg-sky-500/20 text-sky-300",
     icon: "🧪",
-    link: "/pathology",
+    link: "/PathologyTest",
   },
   {
     title: "Doctor Consultation",
     desc: "Connect with certified doctors for online or offline consultations anytime.",
     color: "bg-indigo-500/20 text-indigo-300",
     icon: "👨‍⚕️",
-    link: "/doctors",
+    link: "/DoctorLandingpage",
   },
   {
     title: "Fire Brigade",
     desc: "Request emergency fire brigade support instantly with real-time tracking.",
     color: "bg-orange-500/20 text-orange-300",
     icon: "🚒",
-    link: "/firebrigade-list",
+    link: "/FireLandingpage",
   },
 ];
 
