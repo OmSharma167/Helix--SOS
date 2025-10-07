@@ -444,7 +444,7 @@ const HealthConsultationInterface = () => {
    );
 
     return (
-        <div className="flex flex-col h-screen bg-gray-50 font-sans">
+        <div className="flex flex-col pt-16 h-screen bg-gray-50 font-sans">
             <div className="md:hidden sticky top-0 bg-white border-b border-gray-200 z-10 shadow-sm">
                 <div className="flex items-center justify-between p-4">
                     <button onClick={() => setSidebarOpen(true)} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
@@ -464,15 +464,7 @@ const HealthConsultationInterface = () => {
                 <ChatHistory />
                 <main className="flex-1 flex flex-col h-full bg-white shadow-xl md:rounded-tl-2xl overflow-hidden relative">
                     <div className="flex-1 flex flex-col p-4 sm:p-6 min-h-0">
-                        <div className="mb-4 flex items-start gap-3 p-4 bg-blue-50 border border-blue-200 rounded-xl shadow-sm">
-                            <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                            <div>
-                                <h4 className="text-sm font-semibold text-blue-800 mb-1">Medical Disclaimer</h4>
-                                <p className="text-sm text-blue-700 leading-relaxed">
-                                    This AI provides general health info only. Always consult a healthcare professional for medical advice.
-                                </p>
-                            </div>
-                        </div>
+                        
 
                         <div ref={messagesContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto space-y-4 p-2 -mx-2">
                            {messages.length === 0 ? (

@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import {
+  Stethoscope,
+  Pill,
+  AlertCircle,
+  User,
+  LogOut,
+  Menu,
+  X,
+  Info,
+} from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,10 +38,10 @@ export default function Header() {
   return (
     <header
       className={`fixed w-full top-0 left-0 z-50 transition-colors duration-300 ${
-        isScrolled ? "bg-slate-900 shadow-md" : "bg-transparent"
+        isScrolled ? "bg-slate-800 shadow-md" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className=" mx-auto">
         <div
           className={`rounded-b-xl flex items-center justify-between py-3 px-4 md:px-6 transition-all duration-300 ${
             isScrolled
@@ -81,47 +91,63 @@ export default function Header() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6 text-sm text-white/80">
             <Link
-              to="/doctors"
-              className="text-white/80 font-bold hover:text-white"
+              to="/DoctorLandingpage"
+              className="flex items-center gap-2 text-white/80 font-bold hover:text-white transition-colors group"
             >
-              Telemedicine
+              <Stethoscope className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <span>Telemedicine</span>
             </Link>
-            <a href="#" className="hover:text-white font-bold">
-              Pharmacy
-            </a>
-            <a href="#" className="hover:text-white font-bold">
-              Emergency
-            </a>
+
+            <Link
+              to="/PharmacyLanding"
+              className="flex items-center gap-2 text-white/80 font-bold hover:text-white transition-colors group"
+            >
+              <Pill className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <span>Pharmacy</span>
+            </Link>
+
+            <Link
+              to="/AboutPage"
+              className="flex items-center gap-2 text-white/80 font-bold hover:text-white transition-colors group"
+            >
+              <Info className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <span>About</span>
+            </Link>
+
             <div className="ml-4 flex items-center gap-3">
               {!user ? (
                 <>
                   <Link
                     to="/login"
-                    className="text-white/80 hover:text-white font-bold"
+                    className="flex items-center gap-2 text-white/80 hover:text-white font-bold transition-colors"
                   >
-                    Login
+                    <User className="w-4 h-4" />
+                    <span>Login</span>
                   </Link>
                   <Link
                     to="/signup"
-                    className="px-4 py-2 rounded-full bg-white text-slate-900 font-semibold hover:bg-white/90 transition"
+                    className="px-4 py-2 rounded-full bg-white text-slate-900 font-semibold hover:bg-white/90 transition flex items-center gap-2"
                   >
-                    Signup
+                    <User className="w-4 h-4" />
+                    <span>Signup</span>
                   </Link>
                 </>
               ) : (
                 <>
                   <button
                     onClick={() => navigate("/dashboard")}
-                    className="px-3 py-1.5 rounded-full bg-white/20 text-white font-medium hover:bg-white/30 transition"
+                    className="px-3 py-1.5 rounded-full bg-white/20 text-white font-medium hover:bg-white/30 transition flex items-center gap-2"
                   >
-                    {user.name || "My Profile"}
+                    <User className="w-4 h-4" />
+                    <span>{user.name || "My Profile"}</span>
                   </button>
 
                   <button
                     onClick={logout}
-                    className="px-4 py-2 rounded-full bg-rose-500 text-white font-semibold hover:bg-rose-600 transition"
+                    className="px-4 py-2 rounded-full bg-rose-500 text-white font-semibold hover:bg-rose-600 transition flex items-center gap-2"
                   >
-                    Logout
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
                   </button>
                 </>
               )}
@@ -134,7 +160,11 @@ export default function Header() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-md bg-white/10 text-white hover:bg-white/20 transition"
             >
-              {isMobileMenuOpen ? "✕" : "☰"}
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
@@ -155,18 +185,32 @@ export default function Header() {
             {/* Navigation Links */}
             <div className="space-y-3">
               <button
-                onClick={() => handleNavigation("/doctors")}
-                className="block w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+                onClick={() => handleNavigation("/DoctorLandingpage")}
+                className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
               >
-                Telemedicine
+                <Stethoscope className="w-5 h-5" />
+                <span>Telemedicine</span>
               </button>
 
-              <button className="block w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition">
-                Pharmacy
+              <button
+                onClick={() => handleNavigation("/PharmacyLanding")}
+                className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+              >
+                <Pill className="w-5 h-5" />
+                <span>Pharmacy</span>
               </button>
 
-              <button className="block w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition">
-                Emergency
+              <button
+                onClick={() => handleNavigation("/AboutPage")}
+                className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+              >
+                <Info className="w-5 h-5" />
+                <span>About</span>
+              </button>
+
+              <button className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition">
+                <AlertCircle className="w-5 h-5" />
+                <span>Emergency</span>
               </button>
             </div>
 
@@ -176,36 +220,41 @@ export default function Header() {
                 <div className="space-y-3">
                   <button
                     onClick={() => handleNavigation("/login")}
-                    className="block w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+                    className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
                   >
-                    Login
+                    <User className="w-5 h-5" />
+                    <span>Login</span>
                   </button>
 
                   <button
                     onClick={() => handleNavigation("/signup")}
-                    className="w-full px-4 py-3 rounded-full bg-white text-slate-900 font-semibold hover:bg-white/90 transition text-center"
+                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full bg-white text-slate-900 font-semibold hover:bg-white/90 transition"
                   >
-                    Signup
+                    <User className="w-5 h-5" />
+                    <span>Signup</span>
                   </button>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <div className="px-3 py-2 text-white/70 text-sm">
-                    Welcome, {user.name || "User"}
+                  <div className="flex items-center gap-2 px-3 py-2 text-white/70 text-sm">
+                    <User className="w-4 h-4" />
+                    <span>Welcome, {user.name || "User"}</span>
                   </div>
 
                   <button
                     onClick={() => handleNavigation("/dashboard")}
-                    className="block w-full text-left text-white font-bold py-3 px-4 rounded-lg bg-white/20 hover:bg-white/30 transition"
+                    className="flex items-center gap-3 w-full text-left text-white font-bold py-3 px-4 rounded-lg bg-white/20 hover:bg-white/30 transition"
                   >
-                    My Profile
+                    <User className="w-5 h-5" />
+                    <span>My Profile</span>
                   </button>
 
                   <button
                     onClick={handleLogout}
-                    className="w-full px-4 py-3 rounded-full bg-rose-500 text-white font-semibold hover:bg-rose-600 transition text-center"
+                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full bg-rose-500 text-white font-semibold hover:bg-rose-600 transition"
                   >
-                    Logout
+                    <LogOut className="w-5 h-5" />
+                    <span>Logout</span>
                   </button>
                 </div>
               )}

@@ -13,10 +13,10 @@ import {
  import React from "react"
 function PathologyTest() {
   return (
-    <div className="min-h-screen bg-white">
-      <section className="pt-32 pb-20 px-6">
+    <div className=" bg-white">
+      <section className=" px-6">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid  md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
                 Healthcare at Your
