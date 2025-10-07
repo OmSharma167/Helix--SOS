@@ -1,11 +1,8 @@
-
-
-
 // src/services/doctorService.js
 import axios from "axios";
 
-const API = "http://localhost:5000/api/doctors"; // change if deployed
-// const API = `${import.meta.env.VITE_API_URL}/doctors`;
+// Use environment variable for base URL
+const API = `${import.meta.env.VITE_API_URL}/doctors`;
 
 // ✅ Register doctor
 export const registerDoctor = async (doctorData, token) => {

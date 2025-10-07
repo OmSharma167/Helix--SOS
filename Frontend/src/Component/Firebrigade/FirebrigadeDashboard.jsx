@@ -9,7 +9,9 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import 'leaflet-routing-machine';
 
-const socket = io("http://localhost:5000");
+const socket = io(import.meta.env.VITE_API_URL, {
+  transports: ["websocket"],
+});
 
 // Marker imports
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";

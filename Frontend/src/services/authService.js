@@ -1,7 +1,11 @@
 import axios from "axios";
 
+// const API = axios.create({
+//   baseURL: "http://localhost:5000/api/users", // your backend URL
+// });
+
 const API = axios.create({
-  baseURL: "http://localhost:5000/api/users", // your backend URL
+  baseURL: import.meta.env.VITE_API_URL + "/users",
 });
 
 // const API = axios.create({
