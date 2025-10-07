@@ -1,5 +1,5 @@
 // controllers/fireBrigadeController.js
-import Firebrigade from "../models/FireBrigade/FireBrigade.js";
+import Firebrigade from "../models/FireBrigade/Firebrigade.js";
 import User from "../models/User/User.js";
 import Roles from "../enum/roles.js";
 import SOSRequest from "../models/FireBrigade/SOSRequest.js";
