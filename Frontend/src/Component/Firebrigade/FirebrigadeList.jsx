@@ -308,10 +308,10 @@ const FirebrigadeList = () => {
                       <span className="font-semibold w-20">Contact:</span>
                       {fb.contactNumber}
                     </p>
-                    <p className="text-gray-600 flex items-center">
+                    {/* <p className="text-gray-600 flex items-center">
                       <span className="font-semibold w-20">Email:</span>
                       {fb.email || "Not provided"}
-                    </p>
+                    </p> */}
                     <p className="text-gray-600 flex items-start">
                       <span className="font-semibold w-20">Address:</span>
                       <span className="flex-1">{fb.address}</span>
