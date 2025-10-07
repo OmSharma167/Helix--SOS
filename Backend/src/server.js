@@ -167,8 +167,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
-import { Server } from "socket.io";
 import connectDB from "./config/db.js";
+import { Server } from "socket.io";
+
 
 // Import Routes
 import userRoutes from "./routes/userRoutes.js";
