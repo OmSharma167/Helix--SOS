@@ -678,8 +678,10 @@ const AboutPage = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400 rounded-full opacity-10 blur-xl"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-amber-500 rounded-full opacity-10 blur-xl"></div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+            <div className="flex flex-col  items-center justify-between gap-6 relative z-10">
+              
               <div className="flex items-center gap-4">
+                
                 <div className="p-3 rounded-2xl bg-yellow-400 bg-opacity-20">
                   <TrendingUp className="w-8 h-8 text-yellow-400" />
                 </div>
