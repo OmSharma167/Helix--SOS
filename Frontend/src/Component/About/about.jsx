@@ -608,7 +608,7 @@ const AboutPage = () => {
     setShowInvestorContact(true);
     // You can replace this with actual email functionality
     window.open(
-      "mailto:founder@helixsos.com?subject=Investment Opportunity in HelixSOS&body=Hello, I am interested in investing in HelixSOS. Please provide more information.",
+      "mailto:op809034@gmail.com?subject=Investment Opportunity in HelixSOS&body=Hello, I am interested in investing in HelixSOS. Please provide more information.",
       "_blank"
     );
   };
@@ -704,7 +704,7 @@ const AboutPage = () => {
                   onClick={handleInvestorConnect}
                   className="flex items-center gap-2 px-6 py-3 rounded-full bg-yellow-400 text-slate-900 font-bold hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-yellow-400/25"
                 >
-                  <Handshake className="w-5 h-5" />
+                  <Handshake className="w-5  h-5" />
                   Connect with Founder
                 </button>
 
