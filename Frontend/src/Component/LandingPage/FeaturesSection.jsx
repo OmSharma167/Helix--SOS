@@ -43,8 +43,8 @@ export default function FeaturesSection() {
   return (
     <section className="py-20 relative bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 overflow-hidden">
       {/* Background blur and glow layers */}
-      <div className="absolute inset-0 backdrop-blur-3xl bg-slate-900/50"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-indigo-500/10 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 backdrop-blur-3xl bg-slate-900/50 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-indigo-500/10 via-transparent to-transparent pointer-events-none"></div>
 
       <div className="relative max-w-7xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white drop-shadow-lg">
