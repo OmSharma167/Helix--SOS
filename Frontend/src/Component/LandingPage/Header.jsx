@@ -41,7 +41,7 @@ export default function Header() {
         isScrolled ? "bg-slate-800 shadow-md" : "bg-transparent"
       }`}
     >
-      <div className=" mx-auto">
+      <div className="mx-auto relative z-50">
         <div
           className={`rounded-b-xl flex items-center justify-between py-3 px-4 md:px-6 transition-all duration-300 ${
             isScrolled
@@ -143,7 +143,7 @@ export default function Header() {
                   </button>
 
                   <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className="px-4 py-2 rounded-full bg-rose-500 text-white font-semibold hover:bg-rose-600 transition flex items-center gap-2"
                   >
                     <LogOut className="w-4 h-4" />
@@ -155,7 +155,7 @@ export default function Header() {
           </nav>
 
           {/* Mobile Menu Toggle */}
-          <div className="md:hidden">
+          <div className="md:hidden z-50 relative">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-md bg-white/10 text-white hover:bg-white/20 transition"
@@ -171,53 +171,54 @@ export default function Header() {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          className={`md:hidden fixed top-[70px] left-0 w-full transition-all duration-300 ease-in-out overflow-hidden z-50 ${
             isMobileMenuOpen
-              ? "max-h-96 opacity-100 py-4"
+              ? "max-h-screen opacity-100 py-4"
               : "max-h-0 opacity-0 py-0"
           } ${
             isScrolled
               ? "bg-slate-900/95 backdrop-blur-md border border-white/10"
               : "bg-slate-900/80 backdrop-blur-md border border-white/20"
-          } rounded-b-xl border-t-0`}
+          }`}
         >
           <div className="px-4 space-y-4">
             {/* Navigation Links */}
-            <div className="space-y-3">
-              <button
-                onClick={() => handleNavigation("/DoctorLandingpage")}
-                className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
-              >
-                <Stethoscope className="w-5 h-5" />
-                <span>Telemedicine</span>
-              </button>
+            <button
+              onClick={() => handleNavigation("/DoctorLandingpage")}
+              className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+            >
+              <Stethoscope className="w-5 h-5" />
+              <span>Telemedicine</span>
+            </button>
 
-              <button
-                onClick={() => handleNavigation("/PharmacyLanding")}
-                className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
-              >
-                <Pill className="w-5 h-5" />
-                <span>Pharmacy</span>
-              </button>
+            <button
+              onClick={() => handleNavigation("/PharmacyLanding")}
+              className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+            >
+              <Pill className="w-5 h-5" />
+              <span>Pharmacy</span>
+            </button>
 
-              <button
-                onClick={() => handleNavigation("/AboutPage")}
-                className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
-              >
-                <Info className="w-5 h-5" />
-                <span>About</span>
-              </button>
+            <button
+              onClick={() => handleNavigation("/AboutPage")}
+              className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+            >
+              <Info className="w-5 h-5" />
+              <span>About</span>
+            </button>
 
-              <button className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition">
-                <AlertCircle className="w-5 h-5" />
-                <span>Emergency</span>
-              </button>
-            </div>
+            <button
+              onClick={() => alert("Emergency clicked!")}
+              className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
+            >
+              <AlertCircle className="w-5 h-5" />
+              <span>Emergency</span>
+            </button>
 
             {/* Auth Section */}
             <div className="pt-3 border-t border-white/20">
               {!user ? (
-                <div className="space-y-3">
+                <>
                   <button
                     onClick={() => handleNavigation("/login")}
                     className="flex items-center gap-3 w-full text-left text-white/80 font-bold hover:text-white py-2 px-3 rounded-lg hover:bg-white/10 transition"
@@ -233,9 +234,9 @@ export default function Header() {
                     <User className="w-5 h-5" />
                     <span>Signup</span>
                   </button>
-                </div>
+                </>
               ) : (
-                <div className="space-y-3">
+                <>
                   <div className="flex items-center gap-2 px-3 py-2 text-white/70 text-sm">
                     <User className="w-4 h-4" />
                     <span>Welcome, {user.name || "User"}</span>
@@ -256,20 +257,20 @@ export default function Header() {
                     <LogOut className="w-5 h-5" />
                     <span>Logout</span>
                   </button>
-                </div>
+                </>
               )}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Overlay for mobile menu */}
-      {isMobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 z-40 md:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
+        {/* Overlay for mobile menu */}
+        {isMobileMenuOpen && (
+          <div
+            className="fixed inset-0 bg-black/20 z-40 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </div>
     </header>
   );
 }
