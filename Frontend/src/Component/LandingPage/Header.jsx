@@ -240,6 +240,7 @@ export default function Header() {
                   <div className="flex items-center gap-2 px-3 py-2 text-white/70 text-sm">
                     <User className="w-4 h-4" />
                     <span>Welcome, {user.name || "User"}</span>
+                    
                   </div>
 
                   <button
