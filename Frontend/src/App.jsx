@@ -35,6 +35,7 @@ import DoctorsSection from "./Component/Doctor/DoctorLandingPage/DoctorsSection"
 import SOSButton from "./Component/Firebrigade/SOSButton";
 import PathologyTest from "./Component/Pathology/PathologyTest";
 import PharmacyLanding from "./Component/Pharmacy/PharmacyLanding";
+import EmergencySOS from "./Component/Emergency/EmergencySOS";
 
 
 
@@ -52,6 +53,7 @@ function App() {
       <Route path="/doctor/register" element={<DoctorFormPage />} />
       {/* <Route path="/doctors" element={<DoctorListPage />} /> */}
       <Route path="/book-doctor/:id" element={<BookDoctorPage />} />
+      //doctorside dashboard
       <Route path="/my-bookings" element={<MyBookingsPage />} />
       <Route path="/doctor/bookings" element={<DoctorBookingsPage />} />
       {/* Hospital / Police / Ambulance */}
@@ -94,6 +96,8 @@ function App() {
       <Route path="/PathologyTest" element={<PathologyTest />} />
       //PharmacyLanding
       <Route path="/PharmacyLanding" element={<PharmacyLanding />} />
+      //SOSButton
+      <Route path="/EmergencySOS" element={<EmergencySOS />} />
     </Routes>
   );
 }

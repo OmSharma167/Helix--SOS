@@ -1,11 +1,14 @@
-// // services/ambulanceService.js
+
+
+// // src/services/ambulanceService.js
 // import axios from "axios";
 
+// // Use environment variable for backend URL
 // const API = axios.create({
-//   baseURL: "http://localhost:5000/api",
+//   baseURL: `${import.meta.env.VITE_API_URL}`,
 // });
 
-// // Add token to requests
+// // Add token to all requests
 // API.interceptors.request.use((config) => {
 //   const token = localStorage.getItem("token");
 //   if (token) {
@@ -34,11 +37,7 @@
 //     const { data } = await API.get(`/ambulances/${id}`);
 //     return data;
 //   },
-//   // Get ambulance by ID
-//   getAmbulanceById: async (id) => {
-//     const { data } = await API.get(`/ambulances/${id}`);
-//     return data;
-//   },
+
 //   // Book ambulance
 //   bookAmbulance: async (bookingData) => {
 //     const { data } = await API.post("/bookings", bookingData);
@@ -64,7 +63,6 @@
 // src/services/ambulanceService.js
 import axios from "axios";
 
-// Use environment variable for backend URL
 const API = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}`,
 });
@@ -116,6 +114,12 @@ export const ambulanceService = {
     const { data } = await API.put(`/ambulances/${ambulanceId}/availability`, {
       availability,
     });
+    return data;
+  },
+
+  // ✅ Register new ambulance
+  registerAmbulance: async (ambulanceData) => {
+    const { data } = await API.post("/ambulances/register", ambulanceData);
     return data;
   },
 };
