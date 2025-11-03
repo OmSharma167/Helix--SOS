@@ -91,7 +91,7 @@ export default function HeroSection() {
   const { user } = useAuth();
   const [city, setCity] = useState("");
 
-  const handleEmergencySOS = () => alert("Emergency SOS triggered");
+  const handleEmergencySOS = () => alert("/EmergencySOS");
   const handleConsultDoctor = () => navigate("/DoctorLandingpage");
   const handleNearestHospital = () => navigate("/Hospital-App");
   const handleAIAssistant = () => navigate("/chat-bot");
