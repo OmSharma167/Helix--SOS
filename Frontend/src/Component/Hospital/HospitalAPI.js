@@ -1,77 +1,8 @@
 
 
-// const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
-// export const getUserLocation = () => {
-//   return new Promise((resolve, reject) => {
-//     if (!navigator.geolocation) {
-//       reject(new Error("Geolocation is not supported"));
-//       return;
-//     }
-
-//     navigator.geolocation.getCurrentPosition(
-//       (position) => {
-//         resolve({
-//           latitude: position.coords.latitude,
-//           longitude: position.coords.longitude,
-//         });
-//       },
-//       (error) => reject(error),
-//       { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
-//     );
-//   });
-// };
-
-// export const registerHospital = async (hospitalData) => {
-//   const response = await fetch(`${API_BASE_URL}/hospitals/register`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(hospitalData),
-//   });
-//   return response.json();
-// };
-
-// export const getAllHospitals = async (params = {}) => {
-//   const queryParams = new URLSearchParams(params);
-//   const response = await fetch(`${API_BASE_URL}/hospitals?${queryParams}`);
-//   return response.json();
-// };
-
-// export const getNearestHospitals = async (
-//   latitude,
-//   longitude,
-//   maxDistance = 10000
-// ) => {
-//   const response = await fetch(
-//     `${API_BASE_URL}/hospitals/nearest?latitude=${latitude}&longitude=${longitude}&maxDistance=${maxDistance}&limit=20`
-//   );
-//   return response.json();
-// };
-
-// export const getHospitalById = async (id) => {
-//   const response = await fetch(`${API_BASE_URL}/hospitals/${id}`);
-//   return response.json();
-// };
-
-// export const updateHospital = async (id, hospitalData) => {
-//   const response = await fetch(`${API_BASE_URL}/hospitals/${id}`, {
-//     method: "PUT",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(hospitalData),
-//   });
-//   return response.json();
-// };
-
-// export const deleteHospital = async (id) => {
-//   const response = await fetch(`${API_BASE_URL}/hospitals/${id}`, {
-//     method: "DELETE",
-//   });
-//   return response.json();
-// };
-
-
-
-const API_BASE_URL = "http://localhost:5000/api";
 
 export const getUserLocation = () => {
   return new Promise((resolve, reject) => {
