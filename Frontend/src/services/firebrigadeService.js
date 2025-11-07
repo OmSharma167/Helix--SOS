@@ -73,6 +73,76 @@
 // } = firebrigadeService;
 
 
+// import axios from "axios";
+
+// // Use environment variable for base URL
+// const API_URL = import.meta.env.VITE_API_URL;
+
+// const api = axios.create({
+//   baseURL: API_URL,
+// });
+
+// // Add token to requests automatically
+// api.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
+
+// export const firebrigadeService = {
+//   // Register new firebrigade
+//   registerFirebrigade: (data) => api.post("/fire-brigades/register", data),
+
+//   // Get firebrigade by user ID
+//   getFirebrigadeByUserId: (userId) => api.get(`/fire-brigades/user/${userId}`),
+
+//   // Send SOS request
+//   sendSOS: (data) => api.post("/fire-brigades/sos", data),
+
+//   // Get firebrigade by ID
+//   getFirebrigadeById: (id) => api.get(`/fire-brigades/${id}`),
+
+//   // Update firebrigade
+//   updateFirebrigade: (id, data) => api.put(`/fire-brigades/${id}`, data),
+
+//   // Get all firebrigades
+//   getAllFirebrigades: (params = {}) => api.get("/fire-brigades", { params }),
+
+//   // Get nearest firebrigades
+//   getNearestFirebrigades: (params) =>
+//     api.get("/fire-brigades/nearest", { params }),
+
+//   // Delete firebrigade
+//   deleteFirebrigade: (id) => api.delete(`/fire-brigades/${id}`),
+
+//   // Get SOS requests for provider
+//   getSOSForProvider: (providerId) =>
+//     api.get(`/fire-brigades/sos/provider/${providerId}`),
+
+//   // Update firebrigade location
+//   updateFirebrigadeLocation: (userId, location) =>
+//     api.put(`/fire-brigades/${userId}/location`, { location }),
+// };
+
+// // Named exports for convenience
+// export const {
+//   registerFirebrigade,
+//   getFirebrigadeByUserId,
+//   sendSOS,
+//   getFirebrigadeById,
+//   updateFirebrigade,
+//   getAllFirebrigades,
+//   getNearestFirebrigades,
+//   deleteFirebrigade,
+//   getSOSForProvider,
+//   updateFirebrigadeLocation,
+// } = firebrigadeService;
+
+
+
+// src/services/firebrigadeService.js - No major changes, but ensured location update route matches backend
 import axios from "axios";
 
 // Use environment variable for base URL
@@ -94,33 +164,24 @@ api.interceptors.request.use((config) => {
 export const firebrigadeService = {
   // Register new firebrigade
   registerFirebrigade: (data) => api.post("/fire-brigades/register", data),
-
   // Get firebrigade by user ID
   getFirebrigadeByUserId: (userId) => api.get(`/fire-brigades/user/${userId}`),
-
   // Send SOS request
   sendSOS: (data) => api.post("/fire-brigades/sos", data),
-
   // Get firebrigade by ID
   getFirebrigadeById: (id) => api.get(`/fire-brigades/${id}`),
-
   // Update firebrigade
   updateFirebrigade: (id, data) => api.put(`/fire-brigades/${id}`, data),
-
   // Get all firebrigades
   getAllFirebrigades: (params = {}) => api.get("/fire-brigades", { params }),
-
   // Get nearest firebrigades
   getNearestFirebrigades: (params) =>
     api.get("/fire-brigades/nearest", { params }),
-
   // Delete firebrigade
   deleteFirebrigade: (id) => api.delete(`/fire-brigades/${id}`),
-
   // Get SOS requests for provider
   getSOSForProvider: (providerId) =>
     api.get(`/fire-brigades/sos/provider/${providerId}`),
-
   // Update firebrigade location
   updateFirebrigadeLocation: (userId, location) =>
     api.put(`/fire-brigades/${userId}/location`, { location }),
