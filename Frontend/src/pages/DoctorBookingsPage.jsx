@@ -18,14 +18,25 @@ export default function DoctorBookingsPage() {
     }
   };
 
+  // const handleStatusChange = async (id, status) => {
+  //   try {
+  //     await updateBookingStatus(id, status, user.token);
+  //     fetchBookings(); // refresh after update
+  //   } catch (err) {
+  //     console.error("Error updating booking:", err);
+  //   }
+  // };
+
   const handleStatusChange = async (id, status) => {
     try {
       await updateBookingStatus(id, status, user.token);
-      fetchBookings(); // refresh after update
+      // ✅ Refetch fresh bookings after update
+      await fetchBookings();
     } catch (err) {
       console.error("Error updating booking:", err);
     }
   };
+
 
   useEffect(() => {
     if (user) fetchBookings();

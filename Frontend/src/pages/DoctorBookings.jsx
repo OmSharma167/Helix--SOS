@@ -22,15 +22,25 @@ export default function DoctorBookings() {
     fetchBookings();
   }, []);
 
+  // const handleStatusChange = async (id, status) => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     await updateBookingStatus(id, status, token);
+  //     fetchBookings();
+  //   } catch (err) {
+  //     console.error("Error updating booking", err);
+  //   }
+  // };
   const handleStatusChange = async (id, status) => {
     try {
-      const token = localStorage.getItem("token");
-      await updateBookingStatus(id, status, token);
-      fetchBookings();
+      await updateBookingStatus(id, status, user.token);
+      // ✅ Refetch fresh bookings after update
+      await fetchBookings();
     } catch (err) {
-      console.error("Error updating booking", err);
+      console.error("Error updating booking:", err);
     }
   };
+
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
