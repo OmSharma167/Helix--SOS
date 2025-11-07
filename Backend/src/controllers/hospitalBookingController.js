@@ -1,6 +1,6 @@
-import HospitalBooking from "../../models/Hospital/HospitalBooking.js";
-import Hospital from "../../models/Hospital/Hospital.js";
-import User from "../../models/User/User.js";
+import HospitalBooking from "../models/Hospital/HospitalBooking.js";
+import Hospital from "../models/Hospital/Hospital.js";
+import User from "../models/User/User.js";
 
 // ✅ Create booking
 export const createHospitalBooking = async (req, res) => {
