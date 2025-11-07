@@ -8,7 +8,7 @@ import {
 } from "../controllers/hospitalBookingController.js";
 
 import protect from "../middleware/authMiddleware.js";
-import authorizeRoles from "../middleware/authorizeRoles.js";
+import authorizeRoles from "../middleware/roleMiddleware.js";
 import Roles from "../enum/roles.js";
 
 const router = express.Router();
