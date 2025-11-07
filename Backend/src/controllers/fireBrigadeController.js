@@ -627,80 +627,264 @@ import SOSRequest from "../models/FireBrigade/SOSRequest.js";
 import axios from "axios";
 import { validationResult } from "express-validator";
 
+// export const getCoordinatesFromAddress = async (address) => {
+//   // Try Mapbox if token is available
+//   const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN;
+//   if (mapboxToken) {
+//     try {
+//       const encodedAddress = encodeURIComponent(address);
+//       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedAddress}.json?access_token=${mapboxToken}&limit=1`;
+//       const response = await axios.get(url);
+//       if (response.data.features && response.data.features.length > 0) {
+//         const [longitude, latitude] = response.data.features[0].center;
+//         return { longitude, latitude };
+//       } else {
+//         console.log("Mapbox: Address not found, falling back to OSM");
+//       }
+//     } catch (error) {
+//       console.log("Mapbox error, falling back to OSM:", error.message);
+//     }
+//   }
+//   // Fallback to OpenStreetMap
+//   try {
+//     const encodedAddress = encodeURIComponent(address);
+//     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1`;
+//     const response = await axios.get(url, {
+//       headers: { "User-Agent": "YourAppName/1.0" },
+//     });
+//     if (response.data && response.data.length > 0) {
+//       const latitude = parseFloat(response.data[0].lat);
+//       const longitude = parseFloat(response.data[0].lon);
+//       return { longitude, latitude };
+//     } else {
+//       throw new Error("Address not found in OSM");
+//     }
+//   } catch (osmError) {
+//     console.error("OSM Geocoding error:", osmError.message);
+//     throw new Error("Failed to get coordinates from address");
+//   }
+// };
+
+// // Alternative function using OpenStreetMap Nominatim (free option)
+// const getCoordinatesFromAddressOSM = async (address) => {
+//   try {
+//     const encodedAddress = encodeURIComponent(address);
+//     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1`;
+//     const response = await axios.get(url, {
+//       headers: {
+//         "User-Agent": "YourAppName/1.0", // Required by Nominatim
+//       },
+//     });
+//     if (response.data && response.data.length > 0) {
+//       return {
+//         longitude: parseFloat(response.data[0].lon),
+//         latitude: parseFloat(response.data[0].lat),
+//       };
+//     } else {
+//       throw new Error("Address not found");
+//     }
+//   } catch (error) {
+//     console.error("OSM Geocoding error:", error.message);
+//     throw new Error("Failed to get coordinates from address");
+//   }
+// };
+
+// // @desc Register/Add new firebrigade (from existing user)
+// // @route POST /api/firebrigades/register
+// // @access Private
+// export const registerFirebrigade = async (req, res) => {
+//   try {
+//     // Check for validation errors
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Validation failed",
+//         errors: errors.array(),
+//       });
+//     }
+//     const { userId, name, contactNumber, email, address, imageUrl, gallery } =
+//       req.body;
+//     // Check if user exists and get user details
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
+//     // Check if firebrigade already exists for this user
+//     const existingFirebrigade = await Firebrigade.findOne({
+//       $or: [
+//         { userId },
+//         { name: name.trim() },
+//         { contactNumber },
+//         { email: email?.toLowerCase() },
+//       ],
+//     });
+//     if (existingFirebrigade) {
+//       return res.status(400).json({
+//         success: false,
+//         message:
+//           "Firebrigade already exists for this user or with this name, contact number, or email",
+//       });
+//     }
+//     // Get coordinates from address
+//     let coordinates;
+//     try {
+//       // Try Mapbox first, fallback to OSM
+//       try {
+//         const coords = await getCoordinatesFromAddress(address);
+//         coordinates = [coords.longitude, coords.latitude];
+//       } catch (mapboxError) {
+//         console.log("Mapbox failed, trying OSM:", mapboxError.message);
+//         const coords = await getCoordinatesFromAddressOSM(address);
+//         coordinates = [coords.longitude, coords.latitude];
+//       }
+//     } catch (geocodingError) {
+//       return res.status(400).json({
+//         success: false,
+//         message:
+//           "Could not find coordinates for the provided address. Please check the address and try again.",
+//         error: geocodingError.message,
+//       });
+//     }
+//     // Create firebrigade object
+//     const firebrigadeData = {
+//       userId, // Link to user
+//       name: name.trim(),
+//       contactNumber,
+//       email: email?.toLowerCase(),
+//       address: address.trim(),
+//       location: {
+//         type: "Point",
+//         coordinates,
+//       },
+//       imageUrl,
+//       gallery: gallery || [],
+//       role: Roles.FIRE,
+//       availability: "Available",
+//     };
+//     // Create and save firebrigade
+//     const firebrigade = new Firebrigade(firebrigadeData);
+//     const savedFirebrigade = await firebrigade.save();
+//     // Update user role to FIRE
+//     await User.findByIdAndUpdate(userId, { role: Roles.FIRE });
+//     res.status(201).json({
+//       success: true,
+//       message: "Firebrigade registered successfully and user role updated",
+//       data: {
+//         firebrigade: {
+//           id: savedFirebrigade._id,
+//           userId: savedFirebrigade.userId,
+//           name: savedFirebrigade.name,
+//           contactNumber: savedFirebrigade.contactNumber,
+//           email: savedFirebrigade.email,
+//           address: savedFirebrigade.address,
+//           location: savedFirebrigade.location,
+//           availability: savedFirebrigade.availability,
+//           imageUrl: savedFirebrigade.imageUrl,
+//           gallery: savedFirebrigade.gallery,
+//           role: savedFirebrigade.role,
+//           createdAt: savedFirebrigade.createdAt,
+//         },
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Register firebrigade error:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to register firebrigade",
+//       error:
+//         process.env.NODE_ENV === "development"
+//           ? error.message
+//           : "Internal server error",
+//     });
+//   }
+// };
 
 
-// Assuming User, Firebrigade, Roles, validationResult are imported
 
-// Unified geocoding function (Mapbox + Enhanced OSM fallback)
+/**
+ * Get coordinates from address using Mapbox first, fallback to OSM.
+ */
 export const getCoordinatesFromAddress = async (address) => {
-  console.log(`Geocoding address: "${address}"`); // Debug log
-
-  // Try Mapbox if token is available
   const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN;
+
+  // Try Mapbox if available
   if (mapboxToken) {
     try {
       const encodedAddress = encodeURIComponent(address);
       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedAddress}.json?access_token=${mapboxToken}&limit=1`;
+
       const response = await axios.get(url);
       if (response.data.features && response.data.features.length > 0) {
         const [longitude, latitude] = response.data.features[0].center;
-        console.log(`Mapbox success: lat=${latitude}, lon=${longitude}`);
         return { longitude, latitude };
       } else {
-        console.log("Mapbox: Address not found, falling back to OSM");
+        console.log("Mapbox: Address not found, falling back to OSM...");
       }
     } catch (error) {
       console.log("Mapbox error, falling back to OSM:", error.message);
     }
   }
 
-  // Enhanced OSM fallback with address variants
-  const variants = [
-    address, // Original
-    address.replace(/, /g, " "), // Replace ", " with space
-    address.replace(/, India/g, "").replace(/ - \d{6}/g, ""), // Remove ", India" and pin code (e.g., " - 110096")
-    address.split(",")[0]?.trim() + " Delhi", // Simplest: Street + "Delhi"
-  ];
+  // Fallback to OpenStreetMap (OSM)
+  try {
+    const encodedAddress = encodeURIComponent(address);
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1`;
 
-  for (let i = 0; i < variants.length; i++) {
-    const variant = variants[i].trim();
-    if (!variant) continue; // Skip empty
+    const response = await axios.get(url, {
+      headers: { "User-Agent": "HelixEmergencyApp/1.0" },
+    });
 
-    try {
-      console.log(`Trying OSM variant ${i + 1}: "${variant}"`); // Debug log
-      const encodedAddress = encodeURIComponent(variant);
-      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1&countrycodes=in`; // Added country filter for India
-      const response = await axios.get(url, {
-        headers: { "User-Agent": "YourAppName/1.0" }, // Required by Nominatim
-      });
-      if (response.data && response.data.length > 0) {
-        const latitude = parseFloat(response.data[0].lat);
-        const longitude = parseFloat(response.data[0].lon);
-        console.log(
-          `OSM success (variant ${i + 1}): lat=${latitude}, lon=${longitude}`
-        );
-        return { longitude, latitude };
-      }
-    } catch (error) {
-      console.warn(`OSM variant ${i + 1} failed:`, error.message);
-      // Continue to next variant
+    if (response.data && response.data.length > 0) {
+      const latitude = parseFloat(response.data[0].lat);
+      const longitude = parseFloat(response.data[0].lon);
+      return { longitude, latitude };
+    } else {
+      throw new Error("Address not found in OSM");
     }
+  } catch (osmError) {
+    console.error("OSM Geocoding error:", osmError.message);
+    throw new Error("Failed to get coordinates from address");
   }
-
-  // If all fail
-  const errorMsg = `Failed to geocode after trying ${
-    variants.length
-  } variants: ${variants.join(" | ")}`;
-  console.error(errorMsg);
-  throw new Error(errorMsg);
 };
 
-// @desc Register/Add new firebrigade (from existing user)
-// @route POST /api/firebrigades/register
-// @access Private
+/**
+ * Alternative OSM-only function (used as direct fallback)
+ */
+const getCoordinatesFromAddressOSM = async (address) => {
+  try {
+    const encodedAddress = encodeURIComponent(address);
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1`;
+
+    const response = await axios.get(url, {
+      headers: { "User-Agent": "HelixEmergencyApp/1.0" },
+    });
+
+    if (response.data && response.data.length > 0) {
+      return {
+        longitude: parseFloat(response.data[0].lon),
+        latitude: parseFloat(response.data[0].lat),
+      };
+    } else {
+      throw new Error("Address not found");
+    }
+  } catch (error) {
+    console.error("OSM Geocoding error:", error.message);
+    throw new Error("Failed to get coordinates from address");
+  }
+};
+
+/**
+ * @desc Register/Add new firebrigade (from existing user)
+ * @route POST /api/firebrigades/register
+ * @access Private
+ */
 export const registerFirebrigade = async (req, res) => {
   try {
-    // Check for validation errors
+    // Validate input
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -709,18 +893,11 @@ export const registerFirebrigade = async (req, res) => {
         errors: errors.array(),
       });
     }
+
     const { userId, name, contactNumber, email, address, imageUrl, gallery } =
       req.body;
 
-    // Validate required fields
-    if (!address || address.trim().length < 5) {
-      return res.status(400).json({
-        success: false,
-        message: "Valid address is required (min 5 characters)",
-      });
-    }
-
-    // Check if user exists and get user details
+    // Check if user exists
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({
@@ -729,7 +906,7 @@ export const registerFirebrigade = async (req, res) => {
       });
     }
 
-    // Check if firebrigade already exists for this user
+    // Prevent duplicate firebrigade registration
     const existingFirebrigade = await Firebrigade.findOne({
       $or: [
         { userId },
@@ -738,6 +915,7 @@ export const registerFirebrigade = async (req, res) => {
         { email: email?.toLowerCase() },
       ],
     });
+
     if (existingFirebrigade) {
       return res.status(400).json({
         success: false,
@@ -746,23 +924,44 @@ export const registerFirebrigade = async (req, res) => {
       });
     }
 
-    // Get coordinates from address (now with enhanced fallback)
+    // ✅ Corrected Location Handling
     let coordinates;
     try {
-      const coords = await getCoordinatesFromAddress(address.trim());
-      coordinates = [coords.longitude, coords.latitude];
+      const coords = await getCoordinatesFromAddress(address);
+
+      if (coords && coords.longitude && coords.latitude) {
+        coordinates = [coords.longitude, coords.latitude];
+      } else {
+        console.log("Mapbox did not return valid coordinates, trying OSM...");
+        const fallbackCoords = await getCoordinatesFromAddressOSM(address);
+
+        if (
+          fallbackCoords &&
+          fallbackCoords.longitude &&
+          fallbackCoords.latitude
+        ) {
+          coordinates = [fallbackCoords.longitude, fallbackCoords.latitude];
+        } else {
+          throw new Error("Could not get valid coordinates from OSM either");
+        }
+      }
+
+      console.log(
+        `✅ Coordinates resolved for '${address}': [${coordinates[1]}, ${coordinates[0]}]`
+      );
     } catch (geocodingError) {
+      console.error("Geocoding failed:", geocodingError.message);
       return res.status(400).json({
         success: false,
         message:
-          "Could not find coordinates for the provided address. Please check the address and try again. (Tried simplified variants automatically.)",
-        error: geocodingError.message, // Includes tried variants for debugging
+          "Could not find coordinates for the provided address. Please check the address and try again.",
+        error: geocodingError.message,
       });
     }
 
-    // Create firebrigade object
+    // Create firebrigade record
     const firebrigadeData = {
-      userId, // Link to user
+      userId,
       name: name.trim(),
       contactNumber,
       email: email?.toLowerCase(),
@@ -777,16 +976,16 @@ export const registerFirebrigade = async (req, res) => {
       availability: "Available",
     };
 
-    // Create and save firebrigade
     const firebrigade = new Firebrigade(firebrigadeData);
     const savedFirebrigade = await firebrigade.save();
 
     // Update user role to FIRE
     await User.findByIdAndUpdate(userId, { role: Roles.FIRE });
 
+    // Send success response
     res.status(201).json({
       success: true,
-      message: "Firebrigade registered successfully and user role updated",
+      message: "🔥 Firebrigade registered successfully and user role updated",
       data: {
         firebrigade: {
           id: savedFirebrigade._id,
