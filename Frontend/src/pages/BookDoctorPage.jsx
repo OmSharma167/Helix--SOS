@@ -48,26 +48,21 @@ export default function BookDoctorPage() {
     const handleBooking = async (e) => {
       e.preventDefault();
       try {
-        const token = localStorage.getItem("token"); // token saved on login
-        await axios.post(
-          "http://localhost:5000/api/bookings",
-          {
-            doctorId: id,
-            appointmentDate,
-            reason,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const token = localStorage.getItem("token"); // token from login
+        const bookingData = {
+          doctorId: id,
+          appointmentDate,
+          reason,
+        };
+
+        await createBooking(bookingData, token); // ✅ uses env variable inside service
         alert("Appointment booked successfully!");
       } catch (error) {
         console.error("Booking failed:", error.response?.data || error.message);
         alert("Failed to book appointment");
       }
     };
+
 
   if (loading) return <p className="text-center mt-20">Loading doctor...</p>;
   if (!doctor) return <p className="text-center mt-20">Doctor not found</p>;
