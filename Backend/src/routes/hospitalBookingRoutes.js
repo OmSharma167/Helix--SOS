@@ -7,7 +7,7 @@ import {
   deleteBooking,
 } from "../controllers/hospitalBookingController.js";
 
-import authenticate from "../middleware/authMiddleware.js";
+import protect from "../middleware/authMiddleware.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 import Roles from "../enum/roles.js";
 
@@ -16,7 +16,7 @@ const router = express.Router();
 // ✅ User creates booking
 router.post(
   "/book",
-  authenticate,
+  protect,
   authorizeRoles(Roles.USER),
   createHospitalBooking
 );
@@ -24,7 +24,7 @@ router.post(
 // ✅ Get user bookings
 router.get(
   "/my-bookings",
-  authenticate,
+  protect,
   authorizeRoles(Roles.USER),
   getUserBookings
 );
@@ -32,7 +32,7 @@ router.get(
 // ✅ Hospital gets its bookings
 router.get(
   "/hospital/:hospitalId",
-  authenticate,
+  protect,
   authorizeRoles(Roles.HOSPITAL),
   getHospitalBookings
 );
@@ -40,7 +40,7 @@ router.get(
 // ✅ Hospital updates booking status
 router.put(
   "/status/:bookingId",
-  authenticate,
+  protect,
   authorizeRoles(Roles.HOSPITAL),
   updateBookingStatus
 );
@@ -48,7 +48,7 @@ router.put(
 // ✅ User cancels booking
 router.delete(
   "/cancel/:bookingId",
-  authenticate,
+  protect,
   authorizeRoles(Roles.USER),
   deleteBooking
 );
