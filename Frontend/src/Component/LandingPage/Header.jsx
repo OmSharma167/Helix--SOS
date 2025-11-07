@@ -42,8 +42,11 @@ export default function Header() {
     if (!user) return navigate("/login");
 
     switch (user.role) {
+      case Roles.USER:
+        navigate(`/my-bookings`);
+        break;
       case Roles.DOCTOR:
-        navigate(`/my-bookings/${user._id}`);
+        navigate(`/doctor/bookings`);
         break;
       case Roles.AMBULANCE:
         navigate(`/Ambulance`);
@@ -58,7 +61,7 @@ export default function Header() {
         navigate(`/firebrigade/dashboard`);
         break;
       default:
-        navigate(`/doctor/bookings`);
+        navigate(`/my-bookings`);
         break;
     }
   };

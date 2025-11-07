@@ -53,8 +53,9 @@ function App() {
       <Route path="/doctor/register" element={<DoctorFormPage />} />
       {/* <Route path="/doctors" element={<DoctorListPage />} /> */}
       <Route path="/book-doctor/:id" element={<BookDoctorPage />} />
-      //doctorside dashboard
+      // user side 
       <Route path="/my-bookings" element={<MyBookingsPage />} />
+      // docot side
       <Route path="/doctor/bookings" element={<DoctorBookingsPage />} />
       {/* Hospital / Police / Ambulance */}
       <Route
