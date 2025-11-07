@@ -10,9 +10,14 @@ import NavigationTabs from "./NavigationTabs";
 import Pagination from "./Pagination";
 import LoadingSpinner from "./LoadingSpinner";
 import EmptyState from "./EmptyState";
-import { getAllHospitals, getNearestHospitals } from "./HospitalAPI.js";
+import {
+  getAllHospitals,
+  getNearestHospitals,
+  createHospitalBooking,
+} from "./HospitalAPI.js";
 import HospitalLandingPage from "./HospitalLandingPage.jsx";
 
+import HospitalBookingForm from "./HospitalBookingForm"; 
 const HospitalApp = () => {
   const { user, loading: authLoading } = useAuth(); // Added authLoading
   const [activeTab, setActiveTab] = useState("browse");
@@ -119,10 +124,8 @@ const HospitalApp = () => {
 
   return (
     <div className="min-h-screen  bg-gray-100">
-      <HospitalLandingPage/>
+      <HospitalLandingPage />
       <div className="container mx-auto px-4 py-8">
-        
-
         {/* <AuthSection /> */}
         {/* <NavigationTabs
           activeTab={activeTab}
@@ -148,9 +151,11 @@ const HospitalApp = () => {
                     <HospitalCard
                       key={hospital._id}
                       hospital={hospital}
+                      onViewDetails={setShowDetails}
+                      onBook={(h) => setSelectedHospital(h)} // ✅ opens form
                       onEdit={handleEdit}
                       onDelete={handleDelete}
-                      onViewDetails={handleViewDetails}
+                      
                       showActions={user && user.role === 4} // Updated to numeric role
                     />
                   ))}
@@ -180,6 +185,15 @@ const HospitalApp = () => {
             onSuccess={handleHospitalSuccess}
             initialData={editingHospital}
             isEdit={!!editingHospital}
+          />
+        )}
+
+        {/* ✅ Booking Form Modal */}
+        {selectedHospital && (
+          <HospitalBookingForm
+            hospital={selectedHospital}
+            onClose={() => setSelectedHospital(null)}
+            onSuccess={() => loadHospitals()}
           />
         )}
 

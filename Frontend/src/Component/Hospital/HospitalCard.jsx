@@ -133,29 +133,7 @@ const HospitalCard = ({
             </button>
           </div>
 
-          {/* {showActions && (
-            <div className="flex space-x-2">
-              <button
-                onClick={() => onEdit(hospital)}
-                className="flex items-center space-x-1 px-3 py-1 bg-green-100 text-green-800 rounded-md hover:bg-green-200 text-sm"
-              >
-                <Edit className="h-4 w-4" />
-                <span>Edit</span>
-              </button>
-              <button
-                onClick={handleDelete}
-                disabled={loading}
-                className="flex items-center space-x-1 px-3 py-1 bg-red-100 text-red-800 rounded-md hover:bg-red-200 text-sm disabled:opacity-50"
-              >
-                {loading ? (
-                  <div className="animate-spin h-4 w-4 border-2 border-red-800 border-t-transparent rounded-full" />
-                ) : (
-                  <Trash2 className="h-4 w-4" />
-                )}
-                <span>Delete</span>
-              </button>
-            </div>
-          )} */}
+         
         </div>
       </div>
     </div>

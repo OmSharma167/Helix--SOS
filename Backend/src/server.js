@@ -310,6 +310,8 @@ import fireBrigadeRoutes from "./routes/fireBrigadeRoutes.js";
 // FireBrigade SOS model (for socket event)
 import SOSRequest from "./models/FireBrigade/SOSRequest.js";
 
+import hospitalBookingRoutes from "./routes/hospitalBookingRoutes.js";
+
 dotenv.config();
 
 const app = express();
@@ -397,6 +399,8 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/hospital-reviews", hospitalReviewRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/fire-brigades", fireBrigadeRoutes);
+
+app.use("/api/hospital-bookings", hospitalBookingRoutes);
 
 // Root route
 app.get("/", (req, res) => {

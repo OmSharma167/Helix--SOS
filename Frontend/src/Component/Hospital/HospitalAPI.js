@@ -166,3 +166,32 @@ export const deleteHospital = async (id) => {
     throw error;
   }
 };
+
+
+// ✅ Create Hospital Booking
+export const createHospitalBooking = async (bookingData) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/hospital-bookings/book`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(bookingData),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to create hospital booking");
+    }
+    return data;
+  } catch (error) {
+    console.error("Error in createHospitalBooking:", error);
+    throw error;
+  }
+};
