@@ -54,13 +54,13 @@ const emergencySchema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           refPath: "assignedServiceProviders.providerType",
-          // 👆 Dynamic reference (changes based on providerType)
+          //  Dynamic reference (changes based on providerType)
         },
         providerType: {
           type: String,
           required: true,
           enum: ["Police", "Ambulance", "Hospital", "Fire"],
-          // 👆 This tells mongoose which collection to look into
+          // This tells mongoose which collection to look into
         },
         status: {
           type: String,

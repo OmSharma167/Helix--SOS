@@ -210,9 +210,9 @@ import {
   getAllFirebrigades,
   getNearestFirebrigades,
   deleteFirebrigade,
-  sendSOS, // ✅ import the new controller
+  sendSOS, 
   getSOSForProvider,
-  updateFirebrigadeLocation, // ✅ Added import
+  updateFirebrigadeLocation, 
 } from "../controllers/fireBrigadeController.js";
 import { body } from "express-validator";
 import protect from "../middleware/authMiddleware.js";
@@ -244,9 +244,9 @@ router.get("/user/:userId", protect, getFirebrigadeByUserId); // Added protect
 router.get("/:id", getFirebrigadeById);
 router.put("/:id", protect, updateFirebrigadeValidation, updateFirebrigade); // Added protect
 router.delete("/:id", protect, deleteFirebrigade); // Added protect
-router.put("/:userId/location", protect, updateFirebrigadeLocation); // ✅ Added route
+router.put("/:userId/location", protect, updateFirebrigadeLocation); 
 
-// ✅ Add SOS route
+//  Add SOS route
 router.post("/sos", protect, sendSOS); // Added protect for auth
 router.get("/sos/provider/:providerId", protect, getSOSForProvider);
 

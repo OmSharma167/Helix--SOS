@@ -195,3 +195,72 @@ export const createHospitalBooking = async (bookingData) => {
     throw error;
   }
 };
+
+
+
+// User: get own bookings
+export const getMyHospitalBookings = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No authentication token found");
+
+  const res = await fetch(`${API_BASE_URL}/hospital-bookings/my-bookings`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); } catch { throw new Error("Server returned invalid JSON"); }
+  if (!res.ok) throw new Error(data.message || "Failed to fetch my bookings");
+  return data; // { success, data: [ ... ] }
+};
+
+// Hospital: get bookings for a hospital
+export const getHospitalBookings = async (hospitalId) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No authentication token found");
+
+  const res = await fetch(`${API_BASE_URL}/hospital-bookings/hospital/${hospitalId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); } catch { throw new Error("Server returned invalid JSON"); }
+  if (!res.ok) throw new Error(data.message || "Failed to fetch hospital bookings");
+  return data;
+};
+
+// Hospital: update booking status (Pending | Confirmed | Cancelled | Completed)
+export const updateHospitalBookingStatus = async (bookingId, status) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No authentication token found");
+
+  const res = await fetch(`${API_BASE_URL}/hospital-bookings/status/${bookingId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ status }),
+  });
+
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); } catch { throw new Error("Server returned invalid JSON"); }
+  if (!res.ok) throw new Error(data.message || "Failed to update booking status");
+  return data;
+};
+
+// User: cancel booking (delete)
+export const cancelHospitalBooking = async (bookingId) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No authentication token found");
+
+  const res = await fetch(`${API_BASE_URL}/hospital-bookings/cancel/${bookingId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); } catch { throw new Error("Server returned invalid JSON"); }
+  if (!res.ok) throw new Error(data.message || "Failed to cancel booking");
+  return data;
+};

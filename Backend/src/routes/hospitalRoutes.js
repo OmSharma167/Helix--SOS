@@ -12,7 +12,7 @@ import {
   bookAppointment,
   getAppointments
 } from "../controllers/hospitalController.js";
-// import { authenticateToken, authorizeRoles } from "../middleware/auth.js"; // Uncomment when auth is ready
+// import { authenticateToken, authorizeRoles } from "../middleware/auth.js"; 
 
 const router = express.Router();
 

@@ -47,15 +47,7 @@ const hospitalSchema = new mongoose.Schema(
       ],
     },
 
-    // Doctors working in hospital
-    // doctors: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Doctor",
-    //   },
-    // ],
-
-    // Ambulances linked to hospital
+    
     ambulances: [
       {
         type: mongoose.Schema.Types.ObjectId,

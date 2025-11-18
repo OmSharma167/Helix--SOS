@@ -118,51 +118,6 @@ import Ambulance from "../models/Ambulnace/Ambulance.js";
 import User from "../models/User/User.js";
 import Roles from "../enum/roles.js";
 
-// Register new ambulance
-// export const registerAmbulance = async (req, res) => {
-//   try {
-//     const { userId, driverName, phoneNumber, vehicleNumber, coordinates, imageUrl } = req.body;
-
-//     // Verify user exists and has ambulance role
-//     const user = await User.findById(userId);
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found" });
-//     }
-
-//     // Check if ambulance already registered for this user
-//     const existingAmbulance = await Ambulance.findOne({ userId });
-//     if (existingAmbulance) {
-//       return res.status(400).json({ message: "Ambulance already registered for this user" });
-//     }
-
-//     // Create new ambulance
-//     const ambulance = new Ambulance({
-//       userId,
-//       driverName,
-//       phoneNumber,
-//       vehicleNumber,
-//       location: {
-//         type: "Point",
-//         coordinates: coordinates // [longitude, latitude]
-//       },
-//       imageUrl: imageUrl || ""
-//     });
-
-//     await ambulance.save();
-
-//     // Update user role to ambulance
-//     await User.findByIdAndUpdate(userId, { role: Roles.AMBULANCE });
-
-//     const populatedAmbulance = await Ambulance.findById(ambulance._id).populate('userId', 'name email phone');
-    
-//     res.status(201).json({
-//       message: "Ambulance registered successfully",
-//       ambulance: populatedAmbulance
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error", error: error.message });
-//   }
-// };
 
 
 export const registerAmbulance = async (req, res) => {

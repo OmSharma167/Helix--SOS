@@ -334,7 +334,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ================= SOCKET.IO HANDLERS =================
+//SOCKET.IO HANDLERS 
 const initializeSocket = (io) => {
   io.on("connection", (socket) => {
     console.log("🟢 User connected:", socket.id);

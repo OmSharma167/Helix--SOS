@@ -13,7 +13,7 @@ import Roles from "../enum/roles.js";
 
 const router = express.Router();
 
-// ✅ User creates booking
+// User creates booking
 router.post(
   "/book",
   protect,
@@ -21,7 +21,7 @@ router.post(
   createHospitalBooking
 );
 
-// ✅ Get user bookings
+//  Get user bookings
 router.get(
   "/my-bookings",
   protect,
@@ -29,7 +29,7 @@ router.get(
   getUserBookings
 );
 
-// ✅ Hospital gets its bookings
+//  Hospital gets its bookings
 router.get(
   "/hospital/:hospitalId",
   protect,
@@ -37,7 +37,7 @@ router.get(
   getHospitalBookings
 );
 
-// ✅ Hospital updates booking status
+//  Hospital updates booking status
 router.put(
   "/status/:bookingId",
   protect,
@@ -45,7 +45,7 @@ router.put(
   updateBookingStatus
 );
 
-// ✅ User cancels booking
+//  User cancels booking
 router.delete(
   "/cancel/:bookingId",
   protect,
